@@ -3,7 +3,7 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 
-<link href='https://raw.githubusercontent.com/slashfoo/lmweb/master/style/latinmodern-mono-light.css' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
+<style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; --title-bar-height:20px; }
 .mac-os-11 { --title-bar-height:28px; }
 html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
 h1, h2, h3, h4, h5 { white-space: pre-wrap; }
@@ -206,260 +206,449 @@ mjx-container { break-inside: avoid; }
 
 
 :root {
-    --side-bar-bg-color: white;
-    --window-border: none;
-    --search-select-bg-color: #575c61;
-    --active-file-bg-color: #f1f4f5;
-    --item-hover-bg-color: #f1f4f5;
-    --item-hover-text-color: black;
-    --control-text-color: #555;
+  --accent-color: #696969; /* nice */
+  --primary-colour: #306797; /* <> */
+  --background-color: white;
+  --border-color: #dbdbdb;
+  --code-bg-color: #f8f8f8; 
+  --font-color: #1f1f1f;
+  --codemirror-color: var(--font-color);
+  --header-color: #000000;
+  --link-color: #2077b2;
+  --control-text-color: #667176;
+  --side-bar-bg-color: #fafafa;
+  --hr-color: var(--primary-colour);
+  --body-font: "Nunito", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --heading-font: "Roboto Slab", serif;
+  --border-radius: 2px;
+  --document-horizontal-margin: 80px;
+  --document-padding-x: 19ch;
+  --font-size: 16px;
+  --h1-fontsize: 2.7rem;
+  --h2-fontsize: 2.2rem;
+  --h3-fontsize: 1.7rem;
+  --h4-fontsize: 1.4rem;
+  --h5-fontsize: 1.2rem;
+  --h6-fontsize: 1.1rem;
+  --line-height: 1.4;
+  --main-content-margin: 0 auto;
+  --main-content-max-width: 100ch;
+  --monospace-font-size: 15px;
+  --monospace-font: "FiraCode", "Inconsolata", "Consolas", "Menlo", "Liberation Mono", Courier, monospace;
+  --monospace-line-height: 1.4;
+  --monospace: var(--monospace-font); /* Fixes source code mode */
+  --nav-width: 200px;
+  --vertical-padding: 40px;
 }
 
-@include-when-export url(https://raw.githubusercontent.com/slashfoo/lmweb/master/style/latinmodern-mono-light.css);
+/* Narrow layout styles */
+@media (max-width: 640px) {
+  :root {
+    --document-padding-x: 4ch;
+  }
+}
 
 html {
-    font-size: 12pt;
+  font-size: var(--font-size);
+  background-color: var(--background-color);
+}
+
+html,
+body {
+  color: var(--font-color);
+  font-family: var(--body-font);
+  line-height: var(--line-height);
 }
 
 #write {
-    font-family: "STIX2Text", "Times New Roman", "serif";
-    line-height: 1.5em;
-    padding: 10%;
-    padding-top: 5%;
+	/* size of writing area: */
+  padding-left: var(--document-padding-x);
+  padding-right: var(--document-padding-x);
+  max-width: var(--main-content-max-width);
+  box-sizing: border-box;
 }
 
-.file-list-item-summary {
-    height: 36px;
-}
+/**
+ * ---------------------
+ * Block Elements
+ */
 
-.file-list-item {
-    padding-top: 18px !important;
-    padding-bottom: 18px;
-}
-
-#sidebar-loading-template.file-list-item {
-    padding-top: 0 !important;
-}
-
-a, a:visited {
-    color: #a00;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: inherit;
-    line-height: 1.5em;
-    margin-bottom: 1em;
-    margin-top: 1em;
-}
-
-h1  {
-    font-size: 2.4em;
-}
-
-#write h1  {
-    text-align: center;
-}
-
-h2 {
-    font-size: 1.8em;
-}
-
-h3 {
-    font-size: 1.4em;
-}
-
-h4 {
-    font-size: 1.2em;
-}
-
-h5  {
-    font-size: 1.1em;
-}
-
-h6 {
-    font-size: 1em;
-}
-
-p {
-    margin-top: 1em;
-    margin-bottom: 1em;
-    text-align: justify;
-}
-
-pre, code {
-    font-family: 'Latin Modern Mono Light', "Latin Modern Mono", monospace !important;
-}
-
-.footnotes {
-    display: list-item;
-    margin-left: 1em;
-}
-
-.md-fences {
-    border: 1px solid;
-}
-
-.md-fences.md-fences-with-lineno {
-    border: none;
-}
-
-.CodeMirror-linenumber {
-    color: #333;
-}
-
-*.in-text-selection,
-::selection,
-.CodeMirror-selected {
-    background: var(--search-select-bg-color);
-    color: var(--search-select-text-color) !important;
-    text-shadow: none;
-}
-
-a.md-toc-inner {
-    color: var(--text-color);
-}
-
-.cm-s-typora-default .cm-link {
-    color: #a00;
-    text-decoration: underline;
-}
-
-.cm-s-typora-default .cm-header, .cm-s-typora-default .cm-property {
-    color: black;
-}
-
-#typora-source .CodeMirror-lines {
-    -webkit-font-smoothing: auto;
-    max-width: 1000px;
-}
-
-.md-def-name:before,
-.md-def-name:after {
-    color: #2d2d2d;
-}
-
-sup.md-footnote {
-    background-color: initial;
-    color: inherit;
-}
-
-mark {
-    background: #fff387;
-}
-
-td, th {
-    border: 1px solid;
-    padding-left: 1ch;
-    padding-right: 1ch;
-}
-
-/*table tr[cid]:first-child > td {
-    border-top: 3px double;
-}*/
-
-th {
-    border-bottom: 0;
-    padding-top: 2px;
-    background: #575c61;
-    border-color: #333;
-    color: #f3f3f3;
-}
-
+/* yaml */
 pre.md-meta-block {
-    border: 1px solid #a2a9b1;
-    background-color: #f8f9fa;
-    padding: 5px;
-    margin-bottom: 1em;
+  background-color: var(--background-color);
+  padding-bottom: .5rem;
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--border-color);
+  font-family: var(--monospace-font);
 }
 
-.task-list-item input:before {
-    content: '\221A';
-    display: inline-block;
-    width: 1.25rem;
-    height: 1.6rem;
-    vertical-align: middle;
-    text-align: center;
-    color: #bbb;
-    background-color: inherit;
+/* headings */
+/* <> */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+  color: var(--header-color);
 }
 
-.task-list-item input:checked:before,
-.task-list-item input[checked]:before{
-    color: inherit;
+/* <> */
+h1 {
+  padding: 5% 4% 4% 4%;
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--h1-fontsize);
+  border: 4px solid var(--primary-colour);
 }
 
-.md-task-list-item > input {
-    top: auto;
-    margin-left: -1.1em;
-    font-size: 1.3em;
-    margin-top: 0px;
-    -webkit-appearance: none;
+h1:not(:first-child) {
+  margin-top: 3rem;
 }
 
-.md-task-list-item input:before {
-    content: '\2610';
-    display: inline-block;
-    width: 1.25rem;
-    height: 1.6rem;
-    vertical-align: middle;
-    text-align: center;
-    color: #bbb;
-    background-color: inherit;
+/* <> */
+h2 {
+  content: '';
+  text-align: center;
+  font-size: var(--h2-fontsize);
+  margin: 1.5rem 10%;
+}
+h2:after {
+  content: '';
+	/* height: 1px; */
+	width: 70%;
+	display: block;
+	margin: .2em auto 0;
+	border-bottom: 2px solid var(--primary-colour);
 }
 
-.md-task-list-item input:checked:before,
-.md-task-list-item input[checked]:before{
-    color: inherit;
-    content: '\2611';
+/* <> */
+h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5em;
+  font-size: var(--h3-fontsize);
+}
+/* <> */
+h3 span{
+  padding: 0 1em;
+  border-left: 2px solid var(--primary-colour);
+  border-right: 2px solid var(--primary-colour);
+}
+
+h4{
+  color: var(--header-color);
+  margin-top: 1rem;
+  margin-bottom: 0.4em;
+  font-size: var(--h4-fontsize );
+}
+/* <> */
+h4 span{
+  padding: 1px 0 0.1em 0;
+  border-bottom: 2px dashed var(--primary-colour);
+}
+
+
+h5{
+  color: var(--header-color);  
+  margin-top: 1rem;
+  margin-bottom: 0.2em;
+  font-size: var(--h5-fontsize);
+}
+
+h6{
+  font-style: oblique;
+  color: var(--header-color);  
+  margin-top: 1rem;
+  margin-bottom: 0.2em;
+  font-size: var(--h6-fontsize);
+}
+
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+
+/* table */
+table {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+table tr:nth-child(2n),
+thead {
+    background-color: var(--side-bar-bg-color);
+}
+
+td,
+th {
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px;
+  padding: .35rem .7rem
+}
+
+li p {
+  margin: 0;
+}
+
+/* .task-list {
+  padding-left: 0;
 }
 
 .task-list-item {
-    padding-left: 1.5em;
+  padding-left: 1.5em;
+  margin-bottom: 0rem;
+} */
+
+/* Task list Checkbox styling from https://github.com/h16nning/typora-gitbook-theme/blob/main/src/gitbook-teal.css */
+
+.md-task-list-item > input:before,
+input[type="checkbox"]:before {
+  border-radius: 0.2rem;
+  margin-top: -0.08rem;
+  margin-left: -0.1rem;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--font-color);
+  background-color: var(--background-color);
+  content: " ";
+  display: block;
+  transition-duration: 0.3s;
+  transition-property: background-color;
 }
+
+.md-task-list-item:hover > input:before,
+input[type="checkbox"]:hover:before {
+  background-color: var(--primary-colour);
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before,
+input[type="checkbox"]:checked:before {
+  background-color: var(--primary-colour);
+}
+
+.md-task-list-item:hover > input:checked:before,
+.md-task-list-item:hover > input[checked]:before,
+input[type="checkbox"]:hover:checked:before {
+  background-color: var(--primary-colour);
+}
+
+.md-task-list-item > input:after,
+.md-task-list-item > input:after,
+input[type="checkbox"]:after {
+  transform: rotate(-45deg);
+  position: absolute;
+  border: 2px solid white;
+  border-top: 0;
+  border-right: 0;
+  top: 0.16rem;
+  left: 0.1rem;
+  width: 0.6rem;
+  height: 0.375rem;
+  content: " ";
+  opacity: 0;
+  transition-duration: 0.3s;
+  transition-property: opacity;
+}
+
+.md-task-list-item > input:checked:after,
+.md-task-list-item > input[checked]:after,
+input[type="checkbox"]:checked:after {
+  opacity: 1;
+}
+
+
 
 blockquote {
-    font-style: italic;
-    padding: 0.25em 24px;
-    position: relative;
-    color: #383838;
-    border-left: 2px solid;
-    
+  font-style: italic; /* <> */
+  margin: 1rem 0;
+  padding-left: 2ch;
+  margin-left: .5ch;
+  position: relative;
+  overflow: visible;   /* <> */
+  border-left: 4px solid var(--primary-colour);
+  color: var(--accent-color);
 }
 
-#write > blockquote {
-    padding: 0.25em 30px;
-    margin-left: -32px;
-    width: calc(100% + 32px);
+/* horizontal line */
+hr {
+  border: none;
+  border-bottom: 2px solid var(--hr-color);
+  margin-top: 1.4rem;
+  margin-bottom: 1.4rem;
 }
 
-#write >  .md-fences-with-lineno {
-    margin-left: -33px;
-    color: black;
+/* list markers */
+ol > li::marker, ul > li::marker {
+	color: var(--primary-colour);
+	font-weight: bold;
 }
 
-.CodeMirror-linenumber {
-    min-width: 25px;
+p {
+  margin: 0.1em 0;
 }
 
-.md-header {
-    font-size: inherit !important;
+/**
+ * Code Fences
+ * see http:/*support.typora.io/Code-Block-Styles
+ */
+
+.cm-s-inner .CodeMirror-gutters {
+   background: var(--code-bg-color);
 }
 
-/*blockquote:before {
-    display: block;
-    content: "\201C";
-    font-size: 80px;
-    position: absolute;
-    left: -20px;
-    top: -20px;
-    color: #7a7a7a;
-}*/
+.code-tooltip {
+  box-shadow: none;
+  border-radius: var(--border-radius);
+  background-color: var(--code-bg-color);
+  border-color: var(--border-color);
+  border-style: solid;
+  border-width: 1px;
+}
 
+.code-tooltip input {
+  outline: none;
+  width: 20ch;
+}
+
+.md-fences .code-tooltip {
+  bottom: -1.8rem;
+  padding: none;
+}
+
+.md-fences.md-focus .cm-s-inner {
+  /* Remove bottom right border radius when tooltip is shown */
+  border-bottom-right-radius: 0;
+}
+
+/* code tooltip autocomplete list */
+
+.autoComplt-hint {
+  background-color: transparent !important;
+  margin: 0 !important;
+  padding: 0.125rem 0.375rem !important;
+  color: var(--text-color) !important;
+  line-height: var(--line-height) !important;
+  height: 1.4rem !important;
+}
+
+.autoComplt-hint-selected {
+  background-color: var(--link-color) !important;
+  color: var(--background-color) !important;
+}
+
+/* basic styles */
+
+.md-fences,
+code,
+tt {
+  border: 1px solid var(--border-color);
+  background-color: var(--code-bg-color);
+  font-family: var(--monospace-font);
+  font-size: var(--monospace-font-size);
+  border-radius: .25rem;
+  padding: 0 .125rem;
+  line-height: var(--monospace-line-height);
+}
+
+.md-fences {
+  margin-bottom: 18px;
+  margin-top: 15px;
+  padding: 0.2em 1em;
+  padding-top: 8px;
+  padding-bottom: 6px;
+}
+
+a {
+  color:  var(--link-color);
+}
+
+
+/**
+ * Control UI (optional)
+ */
+
+.outline-item:hover {
+  color: var(--header-color);
+}
+
+#write div.md-toc-tooltip {
+	background-color: var(--background-color);
+}
+
+/* CodeMirror Theme: a modified version of ir_black - https://github.com/FarhadG/code-mirror-themes/blob/master/themes/ir_black.css */
+
+.cm-s-inner {
+	font-size: 1em;
+	line-height: 1.5em;
+	font-family: var(--monospace-font);
+	letter-spacing: 0.3px;
+	word-spacing: 1px;
+	background: var(--code-bg-color) !important;
+	color: var(--codemirror-color);
+}
+.cm-s-inner .CodeMirror-lines {
+	padding: 0px 0;
+}
+.cm-s-inner .CodeMirror-gutters {
+	background-color: var(--code-bg-color) !important;
+	border: none;
+}
+.cm-s-inner div.CodeMirror-cursor {	border-left: 3px solid var(--codemirror-color) !important;}
+.cm-s-inner .CodeMirror-selected {	background: #afafaf !important;}
+.cm-s-inner .cm-comment {	color: #575757 !important;}
+.cm-s-inner .cm-keyword {	color: #1675ce !important;}
+.cm-s-inner .cm-string {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-number {	color: #5b1d68 !important;}
+.cm-s-inner .cm-property {	color: #5b1d68 !important;}
+.cm-s-inner .cm-atom {	color: #5b1d68 !important;}
+.cm-s-inner .cm-operator {	color: #173d61 !important;}
+.cm-s-inner .CodeMirror-linenumber {	color: #7C7C7C !important;}
+/* Not in original Theme... */
+.cm-s-inner .cm-def {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-punctuation {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-variable {	color: #125d5f !important;}
+.cm-s-inner .cm-variable-2 {	color: #125d5f !important;}
+.cm-s-inner .cm-variable-3 {	color: #125d5f !important;}
+.cm-s-inner .cm-meta {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-string-2 {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-qualifier {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-builtin {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-quote {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-bracket {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-tag {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-attribute {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-hr {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-link {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-plus {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-minus {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-error {	color: var(--codemirror-color) !important;}
+.cm-s-inner .cm-invalidchar {	color: var(--codemirror-color) !important;}
+
+/* End CodeMirror Theme */
 
 
 </style><title>myCollection</title>
 </head>
 <body class='typora-export os-windows'><div class='typora-export-content'>
-<div id='write'  class=''><h1 id='rheniums-collection-on-programming'><span>Rhenium&#39;s Collection on Programming</span></h1><h2 id='matlab-programming'><span>MATLAB Programming</span></h2><h3 id='basic-matlab'><span>Basic MATLAB </span></h3><h4 id='matlab-入门之旅'><a href='https://matlabacademy.mathworks.com/cn/details/matlab-onramp/gettingstarted'><span>MATLAB 入门之旅</span></a></h4><p><span>MATLAB官方入门教程（中文）</span></p><h3 id='psychtoolbox'><span>Psychtoolbox</span></h3><h4 id='psychtoolbox-3'><a href='http://psychtoolbox.org/'><span>Psychtoolbox-3</span></a></h4><p><span>Psychtoolbox-3 official homepage</span></p><p><a href='http://psychtoolbox.org/docs/PsychDemos'><span>PsychDemos</span></a></p><h4 id='vision-and-haptics-laboratory-ptb-demos'><a href='https://peterscarfe.com/ptbtutorials.html'><span>Vision and Haptics Laboratory: PTB Demos</span></a></h4><p><span>Psychtoolbox tutorial with demos from Scarfe Lab</span></p><h4 id='psych-599-introduction-to-psychtoolbox-in-matlab'><a href='http://www.jonaskaplan.com/psych599.php'><span>Psych 599: Introduction to Psychtoolbox in Matlab</span></a></h4><p><span>By Jonas T. Kaplan, Ph.D.</span></p><h4 id='psychtoolbox---youtube'><a href='https://youtube.com/playlist?list=PLHba0I2NebFlhcZSuKRCWwsIWHMYdjBbL&amp;si=W5WDA6yzgYXxDa1p'><span>Psychtoolbox - Youtube</span></a></h4><h3 id='fmri'><span>fMRI</span></h3><h4 id='fmri-tutorials-with-matlab-live-scripts'><a href='https://canlab.github.io/tutorials/'><span>fMRI tutorials with Matlab Live Scripts</span></a></h4><p><span>This series of walkthroughs is designed to illustrate the principles of fMRI acquisition, design, and analysis. They use the CANlab Core interactive analysis tools. Code to run each walkthrough is included in the CANlab Core toolbox, and datasets are included or downloaded from Neurovault.</span></p><h2 id='r-for-psychologists'><span>R for Psychologists</span></h2><h3 id='r-statistics'><span>R Statistics</span></h3><h4 id='introduction-to-r-by-andrew-ellis--boris-mayer'><a href='https://methodenlehre.github.io/intro-to-rstats/index.html'><span>Introduction to R by Andrew Ellis &amp; Boris Mayer</span></a></h4><h4 id='learning-statistical-models-through-simulation-in-r'><a href='https://psyteachr.github.io/stat-models-v1/index.html'><span>Learning Statistical Models Through Simulation in R</span></a></h4><h4 id='bgus-r-course'><a href='https://www.john-ros.com/Rcourse/'><span>BGU&#39;s R course</span></a></h4><h4 id='mixed-models-with-r-getting-started-with-random-effects'><a href='https://m-clark.github.io/mixed-models-with-R/'><span>Mixed Models with R: Getting started with random effects</span></a></h4><h4 id='beyond-multiple-linear-regression-applied-generalized-linear-models-and-multilevel-models-in-r'><a href='https://bookdown.org/roback/bookdown-BeyondMLR/'><span>Beyond Multiple Linear Regression: Applied Generalized Linear Models and Multilevel Models in R</span></a></h4><h4 id='introduction-to-structural-equation-modeling-sem-in-r-with-lavaan'><a href='https://stats.oarc.ucla.edu/r/seminars/rsem/'><span>Introduction to Structural Equation Modeling (SEM) in R with lavaan</span></a></h4><h4 id='latent-growth-models-lgm-and-measurement-invariance-with-r-in-lavaan'><a href='https://stats.oarc.ucla.edu/r/seminars/lgm/'><span>Latent Growth Models (LGM) and Measurement Invariance with R in lavaan</span></a></h4><h4 id='data-analysis-in-medicine-and-health-using-r'><a href='https://bookdown.org/drki_musa/dataanalysis/'><span>Data Analysis in Medicine and Health using R</span></a></h4><h4 id='r-programming-for-psychometrics'><a href='https://bookdown.org/sz_psyc490/r4psychometics/'><span>R Programming for Psychometrics</span></a></h4><h4 id='network-analysis-and-visualization-with-r-and-igraph'><a href='https://kateto.net/netscix2016.html'><span>Network Analysis and Visualization with R and igraph</span></a></h4><h3 id='meta-analysis'><span>Meta-analysis</span></h3><h4 id='doing-meta-analysis-with-r-a-hands-on-guide'><a href='https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/'><span>Doing Meta-Analysis with R: A Hands-On Guide</span></a></h4><p><span>This book serves as an accessible introduction into how meta-analyses can be conducted in R. Essential steps for meta-analysis are covered, including pooling of outcome measures, forest plots, heterogeneity diagnostics, subgroup analyses, meta-regression, methods to control for publication bias, risk of bias assessments and plotting tools.</span></p><h3 id='bayesian-statistics'><span>Bayesian Statistics</span></h3><h4 id='course-handouts-for-bayesian-data-analysis-class'><a href='https://bookdown.org/marklhc/notes_bookdown/'><span>Course Handouts for Bayesian Data Analysis Class</span></a></h4><h4 id='an-introduction-to-bayesian-data-analysis-for-cognitive-science'><a href='https://vasishth.github.io/bayescogsci/book/'><span>An Introduction to Bayesian Data Analysis for Cognitive Science</span></a></h4><h3 id='data-visualization'><span>Data Visualization</span></h3><h4 id='r-graphics-cookbook-2nd-edition'><a href='https://r-graphics.org/'><span>R Graphics Cookbook, 2nd edition</span></a></h4><h4 id='ggplot2-elegant-graphics-for-data-analysis-3rd-edition'><a href='https://ggplot2-book.org/'><span>ggplot2: Elegant Graphics for Data Analysis, 3rd edition</span></a></h4><h4 id='exploratory-data-analysis-and-visualizationhttpsjtr13githubiocc21fall2indexhtml'><a href='https://jtr13.github.io/cc21fall2/index.html'><span>Exploratory Data Analysis and Visualization</span></a></h4><p><span>EDAV Fall 2021 Tues/Thurs Community Contributions</span></p><h3 id='other'><span>Other</span></h3><h4 id='r-for-data-science-2nd-edition'><a href='https://r4ds.hadley.nz/'><span>R for Data Science, 2nd edition</span></a></h4><h4 id='tidy-modeling-with-r'><a href='https://www.tmwr.org/'><span>Tidy Modeling with R</span></a></h4><h4 id='mendelian-randomization-with-gwas-summary-data'><a href='https://mrcieu.github.io/TwoSampleMR/index.html'><span>Mendelian randomization with GWAS summary data</span></a></h4><h4 id='introduction-to-econometrics-with-r'><a href='https://www.econometrics-with-r.org/'><span>Introduction to Econometrics with R</span></a></h4><h4 id='behavior-analysis-with-machine-learning-using-r'><a href='https://enriquegit.github.io/behavior-free/index.html'><span>Behavior Analysis with Machine Learning Using R</span></a></h4><h4 id='computational-genomics-with-r'><a href='https://compgenomr.github.io/book/'><span>Computational Genomics with R</span></a></h4><p>&nbsp;</p><h2 id='javascript--jspsych'><span>JavaScript &amp; jsPsych</span></h2><h3 id='javascript'><span>JavaScript</span></h3><h4 id='现代javascript教程'><a href='https://zh.javascript.info/'><span>现代JavaScript教程</span></a></h4><h3 id='jspsych'><span>jsPsych</span></h3><h4 id='jspsych-73'><a href='https://www.jspsych.org/7.3/'><span>jsPsych 7.3</span></a></h4><h4 id='jspsych-demos'><a href='https://nivlab.github.io/jspsych-demos/'><span>jspsych-demos</span></a></h4><p><span>jsPsych tasks made by the Niv Lab</span></p><h4 id='an-introduction-to-jspsych'><a href='https://softdev.ppls.ed.ac.uk/online_experiments/00_about.html'><span>An introduction to jsPsych</span></a></h4><h4 id='psyc-241-introduction-to-programming-web-based-experiments-for-psychology-research'><a href='https://psyc241.ucsd.edu/'><span>PSYC 241. Introduction to Programming Web-Based Experiments for Psychology Research</span></a></h4><h2 id='python-for-psychology'><span>Python for Psychology</span></h2><h3 id='pandas'><span>Pandas</span></h3><h4 id='10-minutes-to-pandas'><a href='https://pandas.pydata.org/docs/user_guide/10min.html'><span>10 minutes to Pandas</span></a></h4><h3 id='tensorflow--keras'><span>TensorFlow &amp; Keras</span></h3><h4 id='初学者的-tensorflow-20-教程'><a href='https://www.tensorflow.org/tutorials/quickstart/beginner?hl=zh-cn'><span>初学者的 TensorFlow 2.0 教程</span></a></h4><h3 id='cognitive-modeling'><span>Cognitive Modeling</span></h3><h4 id='introduction-to-computational-psychology'><a href='https://alanjern.github.io/computational-psych-book/index.html'><span>Introduction to Computational Psychology</span></a></h4><h2 id='computation-psychology'><span>Computation Psychology</span></h2><h4 id='computational-cognitive-science'><a href='https://vasishth.github.io/bayescogsci/book/'><span>Computational Cognitive Science</span></a></h4><h4 id='cpc-zurich-2023'><a href='https://github.com/computational-psychiatry-course/cpc2023#tutorials'><span>CPC Zurich 2023</span></a></h4><p><span>Computational Psychiatry Course</span></p><p>&nbsp;</p></div></div>
+<div id='write'  class=''><h1 id='rheniums-collection-on-programming'><span>Rhenium&#39;s Collection on Programming</span></h1><h2 id='matlab-programming'><span>MATLAB Programming</span></h2><h3 id='basic-matlab'><span>Basic MATLAB </span></h3><h4 id='matlab-入门之旅'><a href='https://matlabacademy.mathworks.com/cn/details/matlab-onramp/gettingstarted'><span>MATLAB 入门之旅</span></a></h4><p><span>MATLAB官方入门教程（中文）</span></p><h3 id='psychtoolbox'><span>Psychtoolbox</span></h3><h4 id='psychtoolbox-3'><a href='http://psychtoolbox.org/'><span>Psychtoolbox-3</span></a></h4><p><span>Psychtoolbox-3 official homepage</span></p><p><a href='http://psychtoolbox.org/docs/PsychDemos'><span>PsychDemos</span></a></p><h4 id='vision-and-haptics-laboratory-ptb-demos'><a href='https://peterscarfe.com/ptbtutorials.html'><span>Vision and Haptics Laboratory: PTB Demos</span></a></h4><p><span>Psychtoolbox tutorial with demos from Scarfe Lab</span></p><h4 id='psych-599-introduction-to-psychtoolbox-in-matlab'><a href='http://www.jonaskaplan.com/psych599.php'><span>Psych 599: Introduction to Psychtoolbox in Matlab</span></a></h4><p><span>By Jonas T. Kaplan, Ph.D.</span></p><h4 id='psychtoolbox---youtube'><a href='https://youtube.com/playlist?list=PLHba0I2NebFlhcZSuKRCWwsIWHMYdjBbL&amp;si=W5WDA6yzgYXxDa1p'><span>Psychtoolbox - Youtube</span></a></h4><h3 id='fmri'><span>fMRI</span></h3><h4 id='fmri-tutorials-with-matlab-live-scripts'><a href='https://canlab.github.io/tutorials/'><span>fMRI tutorials with Matlab Live Scripts</span></a></h4><p><span>This series of walkthroughs is designed to illustrate the principles of fMRI acquisition, design, and analysis. They use the CANlab Core interactive analysis tools. Code to run each walkthrough is included in the CANlab Core toolbox, and datasets are included or downloaded from Neurovault.</span></p><h2 id='r-for-psychologists'><span>R for Psychologists</span></h2><h3 id='r-statistics'><span>R Statistics</span></h3><h4 id='introduction-to-r-by-andrew-ellis--boris-mayer'><a href='https://methodenlehre.github.io/intro-to-rstats/index.html'><span>Introduction to R by Andrew Ellis &amp; Boris Mayer</span></a></h4><h4 id='learning-statistical-models-through-simulation-in-r'><a href='https://psyteachr.github.io/stat-models-v1/index.html'><span>Learning Statistical Models Through Simulation in R</span></a></h4><h4 id='bgus-r-course'><a href='https://www.john-ros.com/Rcourse/'><span>BGU&#39;s R course</span></a></h4><h4 id='mixed-models-with-r-getting-started-with-random-effects'><a href='https://m-clark.github.io/mixed-models-with-R/'><span>Mixed Models with R: Getting started with random effects</span></a></h4><h4 id='beyond-multiple-linear-regression-applied-generalized-linear-models-and-multilevel-models-in-r'><a href='https://bookdown.org/roback/bookdown-BeyondMLR/'><span>Beyond Multiple Linear Regression: Applied Generalized Linear Models and Multilevel Models in R</span></a></h4><h4 id='introduction-to-structural-equation-modeling-sem-in-r-with-lavaan'><a href='https://stats.oarc.ucla.edu/r/seminars/rsem/'><span>Introduction to Structural Equation Modeling (SEM) in R with lavaan</span></a></h4><h4 id='latent-growth-models-lgm-and-measurement-invariance-with-r-in-lavaan'><a href='https://stats.oarc.ucla.edu/r/seminars/lgm/'><span>Latent Growth Models (LGM) and Measurement Invariance with R in lavaan</span></a></h4><h4 id='data-analysis-in-medicine-and-health-using-r'><a href='https://bookdown.org/drki_musa/dataanalysis/'><span>Data Analysis in Medicine and Health using R</span></a></h4><h4 id='r-programming-for-psychometrics'><a href='https://bookdown.org/sz_psyc490/r4psychometics/'><span>R Programming for Psychometrics</span></a></h4><h4 id='network-analysis-and-visualization-with-r-and-igraph'><a href='https://kateto.net/netscix2016.html'><span>Network Analysis and Visualization with R and igraph</span></a></h4><h3 id='meta-analysis'><span>Meta-analysis</span></h3><h4 id='doing-meta-analysis-with-r-a-hands-on-guide'><a href='https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/'><span>Doing Meta-Analysis with R: A Hands-On Guide</span></a></h4><p><span>This book serves as an accessible introduction into how meta-analyses can be conducted in R. Essential steps for meta-analysis are covered, including pooling of outcome measures, forest plots, heterogeneity diagnostics, subgroup analyses, meta-regression, methods to control for publication bias, risk of bias assessments and plotting tools.</span></p><h3 id='bayesian-statistics'><span>Bayesian Statistics</span></h3><h4 id='course-handouts-for-bayesian-data-analysis-class'><a href='https://bookdown.org/marklhc/notes_bookdown/'><span>Course Handouts for Bayesian Data Analysis Class</span></a></h4><h4 id='an-introduction-to-bayesian-data-analysis-for-cognitive-science'><a href='https://vasishth.github.io/bayescogsci/book/'><span>An Introduction to Bayesian Data Analysis for Cognitive Science</span></a></h4><h3 id='data-visualization'><span>Data Visualization</span></h3><h4 id='r-graphics-cookbook-2nd-edition'><a href='https://r-graphics.org/'><span>R Graphics Cookbook, 2nd edition</span></a></h4><h4 id='ggplot2-elegant-graphics-for-data-analysis-3rd-edition'><a href='https://ggplot2-book.org/'><span>ggplot2: Elegant Graphics for Data Analysis, 3rd edition</span></a></h4><h4 id='exploratory-data-analysis-and-visualization'><a href='https://jtr13.github.io/cc21fall2/index.html'><span>Exploratory Data Analysis and Visualization</span></a></h4><p><span>EDAV Fall 2021 Tues/Thurs Community Contributions</span></p><h3 id='other'><span>Other</span></h3><h4 id='r-for-data-science-2nd-edition'><a href='https://r4ds.hadley.nz/'><span>R for Data Science, 2nd edition</span></a></h4><h4 id='tidy-modeling-with-r'><a href='https://www.tmwr.org/'><span>Tidy Modeling with R</span></a></h4><h4 id='mendelian-randomization-with-gwas-summary-data'><a href='https://mrcieu.github.io/TwoSampleMR/index.html'><span>Mendelian randomization with GWAS summary data</span></a></h4><h4 id='introduction-to-econometrics-with-r'><a href='https://www.econometrics-with-r.org/'><span>Introduction to Econometrics with R</span></a></h4><h4 id='behavior-analysis-with-machine-learning-using-r'><a href='https://enriquegit.github.io/behavior-free/index.html'><span>Behavior Analysis with Machine Learning Using R</span></a></h4><h4 id='computational-genomics-with-r'><a href='https://compgenomr.github.io/book/'><span>Computational Genomics with R</span></a></h4><p>&nbsp;</p><h2 id='javascript--jspsych'><span>JavaScript &amp; jsPsych</span></h2><h3 id='javascript'><span>JavaScript</span></h3><h4 id='现代javascript教程'><a href='https://zh.javascript.info/'><span>现代JavaScript教程</span></a></h4><h3 id='jspsych'><span>jsPsych</span></h3><h4 id='jspsych-73'><a href='https://www.jspsych.org/7.3/'><span>jsPsych 7.3</span></a></h4><h4 id='jspsych-demos'><a href='https://nivlab.github.io/jspsych-demos/'><span>jspsych-demos</span></a></h4><p><span>jsPsych tasks made by the Niv Lab</span></p><h4 id='an-introduction-to-jspsych'><a href='https://softdev.ppls.ed.ac.uk/online_experiments/00_about.html'><span>An introduction to jsPsych</span></a></h4><h4 id='psyc-241-introduction-to-programming-web-based-experiments-for-psychology-research'><a href='https://psyc241.ucsd.edu/'><span>PSYC 241. Introduction to Programming Web-Based Experiments for Psychology Research</span></a></h4><h2 id='python-for-psychology'><span>Python for Psychology</span></h2><h3 id='pandas'><span>Pandas</span></h3><h4 id='10-minutes-to-pandas'><a href='https://pandas.pydata.org/docs/user_guide/10min.html'><span>10 minutes to Pandas</span></a></h4><h3 id='tensorflow--keras'><span>TensorFlow &amp; Keras</span></h3><h4 id='初学者的-tensorflow-20-教程'><a href='https://www.tensorflow.org/tutorials/quickstart/beginner?hl=zh-cn'><span>初学者的 TensorFlow 2.0 教程</span></a></h4><h3 id='cognitive-modeling'><span>Cognitive Modeling</span></h3><h4 id='introduction-to-computational-psychology'><a href='https://alanjern.github.io/computational-psych-book/index.html'><span>Introduction to Computational Psychology</span></a></h4><h2 id='computation-psychology'><span>Computation Psychology</span></h2><h4 id='computational-cognitive-sciencehttpscompcogsci-3016djnavarronet'><a href='https://compcogsci-3016.djnavarro.net/'><span>Computational Cognitive Science</span></a></h4><h4 id='cpc-zurich-2023'><a href='https://github.com/computational-psychiatry-course/cpc2023#tutorials'><span>CPC Zurich 2023</span></a></h4><p><span>Computational Psychiatry Course</span></p><p>&nbsp;</p></div></div>
 </body>
 </html>
