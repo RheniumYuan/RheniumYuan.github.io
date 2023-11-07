@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="作者：Stan开发团队 翻译：Rhenium Yuan" />
+
+<meta name="date" content="2023-11-07" />
+
+<title>[翻译] RStan: the R interface to Stan</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">[翻译] RStan: the R interface to Stan</h1>
+<h4 class="author">作者：Stan开发团队 翻译：Rhenium Yuan</h4>
+<h4 class="date">2023-11-07</h4>
+
+
+
+<p>原文链接<a href="https://cran.r-project.org/web/packages/rstan/vignettes/rstan.html">https://cran.r-project.org/web/packages/rstan/vignettes/rstan.html</a></p>
+<p>这篇文章简单介绍了RStan，Stan的R语言接口。Stan是一个用于贝叶斯推断的C++库，使用No-U-Turn采样（一种Hamiltonian
+Monte
+Carlo的变式）或（频率学派的）最优化推断。本文使用Gelman等（2003）的例子演示RStan。</p>
+<div id="简介" class="section level2">
+<h2>简介</h2>
+<p>Stan是一个用于贝叶斯建模和推断的C++库，使用No-U-Turn采样（NUTS）（Hoffman
+&amp; Gelman,
+2012）获得后验分布模拟。另外，Stan还可以利用LBFGS优化算法最大化目标函数，如对数似然（log-likelihood）。</p>
+<p>R语言程序包<strong>rstan</strong>提供了Stan的R语言接口。<strong>rstan</strong>包可以让我们在R中便捷地拟合Stan模型并读取结果，包括后验推断和一些中间量，比如对数后验密度及其梯度。</p>
+<p>在本文中我们将对<strong>rstan</strong>包的功能进行简要介绍。Stan的官网<a href="mc-stan.org">mc-stan.org</a>介绍了更多关于如何使用Stan及其各种接口的详细内容，比如<em>RStan
+Getting Started</em>（Stan开发团队，2014）。</p>
+</div>
+<div id="前置条件" class="section level2">
+<h2>前置条件</h2>
+<p>Stan是一种建模语言，该语言和贝叶斯图形建模程序BUGS（Lunn et al.,
+2000）类似，但不完全相同。解析器将Stan语言表达的模型翻译成C++代码，然后编译成可执行程序，并在R中加载为动态共享对象（Dynamic
+Shared Object，DSO），用户可以调用该动态共享对象。</p>
+<p>这个过程中需要用到C++编译器，比如g++或clang++。关于如何安装RStan可以使用的C++编译器可以看<a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started">RStan-Getting-Started</a>。</p>
+<p><strong>rstan</strong>包依赖下列R包：</p>
+<ul>
+<li><p><strong>StanHeaders</strong> (Stan C++ headers)</p></li>
+<li><p><strong>BH</strong> (Boost C++ headers)</p></li>
+<li><p><strong>RcppEigen</strong> (Eigen C++ headers)</p></li>
+<li><p><strong>Rcpp</strong> (facilitates using C++ from R)</p></li>
+<li><p><strong>inline</strong> (compiles C++ for use with R)</p></li>
+</ul>
+<p>在安装<strong>rstan</strong>包时这些包会自动下载。</p>
+</div>
+<div id="典型的工作流" class="section level2">
+<h2>典型的工作流</h2>
+<p>以下是通过RStan接口使用Stan进行贝叶斯推断的工作流。</p>
+<ol style="list-style-type: decimal">
+<li><p>使用Stan语言写出统计模型的对数后验密度（到一个不依赖于模型中未知参数的归一化常数），以此来表示模型。我们建议使用扩展名为
+<code>.stan</code>的单独文件，当然也可以使用R中的字符串。</p></li>
+<li><p>使用<code>stanc</code>函数将Stan程序翻译为C++代码。</p></li>
+<li><p>将C++代码编译并生成可以被R加载的DSO（也叫dynamic link library,
+DLL）。</p></li>
+<li><p>运行DSO并从后验分布中抽样。</p></li>
+<li><p>诊断MCMC链（马尔科夫链蒙特卡洛）的收敛性。</p></li>
+<li><p>根据后验样本（后验分布的MCMC抽样得到）进行推断。</p></li>
+</ol>
+<p>一般来说第2,3,4步都在<code>stan</code>函数中进行了。</p>
+</div>
+<div id="示例" class="section level2">
+<h2>示例</h2>
+<p>在接下来的部分中，我们将使用Gelman等（2003）的研究中的一个分层元分析模型（hierarchical
+meta-analysis
+model）作为示例进行演示。案例中，分层模型被用于研究辅导计划对大学入学考试的影响。数据如下表所示，总结了在8所高中进行的实验结果和估计的标准误。这些数据和模型作为完全贝叶斯推理的示例具有历史意义（Rubin,
+1981）。为了方便期间，我们简称“八校”示例（<em>Eight Schools</em>
+examples）。</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">学校</th>
+<th align="center">估计值<span class="math inline">\(y_j\)</span></th>
+<th align="center">标准误<span class="math inline">\(\sigma_j\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">A</td>
+<td align="center">28</td>
+<td align="center">15</td>
+</tr>
+<tr class="even">
+<td align="center">B</td>
+<td align="center">8</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">C</td>
+<td align="center">-3</td>
+<td align="center">16</td>
+</tr>
+<tr class="even">
+<td align="center">D</td>
+<td align="center">7</td>
+<td align="center">11</td>
+</tr>
+<tr class="odd">
+<td align="center">E</td>
+<td align="center">-1</td>
+<td align="center">9</td>
+</tr>
+<tr class="even">
+<td align="center">F</td>
+<td align="center">1</td>
+<td align="center">11</td>
+</tr>
+<tr class="odd">
+<td align="center">G</td>
+<td align="center">18</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td align="center">H</td>
+<td align="center">12</td>
+<td align="center">18</td>
+</tr>
+</tbody>
+</table>
+<p>我们在这里使用“八校”示例是因为它很简单同时代表了一种不无意义的马尔科夫链模拟问题，因为研究问题的原始参数——八所学校的效应——以及代表这些效应在模型总体中变化的超参数之间存在某种互相依赖的关系。在这个例子中，某些Gibbs采样或Hamiltonian蒙特卡洛采样可能收敛较慢。</p>
+<p>我们的统计模型可以指定为</p>
+<p><span class="math display">\[\begin{aligned}
+y_j &amp;\sim \mathsf{Normal}(\theta_j, \sigma_j), \quad j=1,\ldots,8 \\
+\theta_j &amp;\sim \mathsf{Normal}(\mu, \tau), \quad j=1,\ldots,8 \\
+p(\mu, \tau) &amp;\propto 1,
+\end{aligned}\]</span></p>
+<p>其中<span class="math inline">\(\sigma_j\)</span>未知。</p>
+<div id="编写stan程序" class="section level3">
+<h3>编写Stan程序</h3>
+<p>RStan允许将Stan程序编码为文本文件（通常后缀为<code>.stan</code>）或R字符串向量（长度为1）。我们将以下八校模型的代码写在<code>schools.stan</code>文件中：</p>
+<pre><code>data {
+  int&lt;lower=0&gt; J;          // number of schools 
+  real y[J];               // estimated treatment effects
+  real&lt;lower=0&gt; sigma[J];  // s.e. of effect estimates 
+}
+parameters {
+  real mu; 
+  real&lt;lower=0&gt; tau;
+  vector[J] eta;
+}
+transformed parameters {
+  vector[J] theta;
+  theta = mu + tau * eta;
+}
+model {
+  target += normal_lpdf(eta | 0, 1);
+  target += normal_lpdf(y | theta, sigma);
+}</code></pre>
+<p>Stan程序的第一部分，也就是<code>data</code>模块，确定了使用贝叶斯规则的数据：学校的数量<span class="math inline">\(J\)</span>，估计值向量<span class="math inline">\((y_1,\dots,y_J)\)</span>，以及估计标准误向量<span class="math inline">\((\sigma_1,\dots,\sigma_J)\)</span>。数据声明为整型或实型，如果指定了维数，则可以是向量（或更一般的数组）。数据也可以被约束，比如在上面的模型里<span class="math inline">\(J\)</span>被限制为不小于1而<span class="math inline">\(\sigma_y\)</span>必须为正数。</p>
+<p><code>parameter</code>模块声明了后验分布的参数。包括效应的均值<span class="math inline">\(\mu\)</span>，标准差<span class="math inline">\(\tau\)</span>，以及标准化的学校水平的效应<span class="math inline">\(\eta\)</span>。在模型中，我们让非标准化的学校水平的效应<span class="math inline">\(\theta\)</span>作为一个转换后的参数而非直接作为模型参数，其构建方法为：用<span class="math inline">\(\tau\)</span>对效应进行标准化，并减去均值<span class="math inline">\(\mu\)</span>。我们这样对模型设置参数是为了让采样的运行效率更高，因为这样产生的多个变量的分布更适合Hamiltonian蒙特卡洛采样（Neal,
+2011）。</p>
+<p>最后，<code>model</code>模块看起来和一般的统计记号很像。（注意Stan里的正态分布的第二个参数是标准差，而非一般统计学记号里的方差）。我们用向量来编写模型，这样Stan就能利用更高效的算法微分（algorithmic
+differentiation ,
+AD）。我们也可以用一个循环来代替<code>normal_lpdf(y|θ,sigma)</code>来编写模型，但效率较低。</p>
+<pre><code>for (j in 1:J)
+  target += normal_lpdf(y[j] | theta[j],sigma[j]);</code></pre>
+<p>Stan中有很多R中非常好用的统计建模的函数，包括概率分布、矩阵运算还有各种特殊函数。但是这些Stan函数的名字可能和R里不一样，而且需要注意的是，Stan中概率分布函数的参数可能与R中不同。为了解决这个问题，我们可以使用<code>lookup</code>函数查找一个R函数在Stan中对应的函数及其参数，以及在Stan开发团队的文档（2016）中该函数的页码。</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">lookup</span>(<span class="st">&#39;dnorm&#39;</span>)</span></code></pre></div>
+<pre><code>##           StanFunction
+## 374 normal_id_glm_lpmf
+## 375 normal_id_glm_lpmf
+## 376      normal_id_glm
+## 379        normal_lpdf
+## 380             normal
+##                                                        Arguments ReturnType
+## 374   (vector y , matrix x, real alpha, vector beta, real sigma)       real
+## 375 (vector y , matrix x, vector alpha, vector beta, real sigma)       real
+## 376                                                            ~       real
+## 379                            (reals y , reals mu, reals sigma)       real
+## 380                                                            ~       real</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">lookup</span>(<span class="st">&#39;dwilcox&#39;</span>) <span class="co">#Stan中没有Wilcoxon秩和分布的对应函数</span></span></code></pre></div>
+<pre><code>## [1] &quot;no matching Stan functions&quot;</code></pre>
+<p>如果<code>lookup</code>没能查找到对应的Stan函数，则会将其参数视为正则表达式，并尝试查找与Stan函数名称匹配的参数。</p>
+</div>
+<div id="准备数据" class="section level3">
+<h3>准备数据</h3>
+<p><code>stan</code>函数接受的数据包括命名列表、对象名称字符向量或环境（environment）。也可以省略<code>data</code>参数，此时R将搜索与Stan程序<code>data</code>模块中声明的名称相同的对象。以下是八校示例的数据：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>schools_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="at">J =</span> <span class="dv">8</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">28</span>,  <span class="dv">8</span>, <span class="sc">-</span><span class="dv">3</span>,  <span class="dv">7</span>, <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">1</span>, <span class="dv">18</span>, <span class="dv">12</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">sigma =</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">10</span>, <span class="dv">16</span>, <span class="dv">11</span>,  <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">18</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>)</span></code></pre></div>
+<p>也可以从文件中读取数据而不是直接在R脚本中输入（实际上，我们鼓励这样做）。</p>
+</div>
+<div id="从后验分布中采用" class="section level3">
+<h3>从后验分布中采用</h3>
+<p>下一步我们调用<code>stan</code>获得后验样本：</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">library</span>(rstan)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">stan</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">&quot;schools.stan&quot;</span>,  <span class="co"># Stan程序</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">data =</span> schools_data,    <span class="co"># 数据的列表</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">4</span>,             <span class="co"># 马尔科夫链的数量</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="at">warmup =</span> <span class="dv">1000</span>,          <span class="co"># 每条链的预热迭代次数</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="at">iter =</span> <span class="dv">2000</span>,            <span class="co"># 每条链的总迭代次数</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="at">cores =</span> <span class="dv">1</span>,              <span class="co"># 核心的数量</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="at">refresh =</span> <span class="dv">0</span>             <span class="co"># 不显示运行过程</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  )</span></code></pre></div>
+<pre><code>## Warning in readLines(file, warn = TRUE):
+## 读&#39;E:\贝叶斯统计2023\schools.stan&#39;时最后一行未遂</code></pre>
+<pre><code>## Warning: There were 3 divergent transitions after warmup. See
+## https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
+## to find out why this is a problem and how to eliminate them.</code></pre>
+<pre><code>## Warning: Examine the pairs() plot to diagnose sampling problems</code></pre>
+<p><code>stan</code>函数包括下面三步：</p>
+<ul>
+<li><p>将Stan代码翻译为C++代码</p></li>
+<li><p>将C++代码编译为DSO并加载DSO</p></li>
+<li><p>对用户指定数据和其他设定采样</p></li>
+</ul>
+<p>只需调用一次<code>stan</code>就可以完成所有三个步骤，但也可以逐个执行（参见<code>stanc</code>、<code>stan_model</code>和<code>sampling</code>的帮助页面），这对调试非常有用。此外，Stan
+还会保存DSO，以便再次拟合同一模型（可能使用新数据和设置）时避免重新编译。如果在模型编译后、采样前发生错误（如数据和初始值等输入出现问题），我们仍可重复使用编译后的模型。</p>
+<p><code>stan</code>函数返回一个stanfit对象，即类型为”<code>stanfit</code>“的S4对象。如果您不熟悉R中类和S4类的概念，请参阅Chambers(2008)。S4类由一些属性（数据）和一些方法组成，前者用于对对象进行建模，后者用于对对象的行为进行建模。从用户的角度来看，一旦创建了stanfit对象，我们主要关心的是定义了哪些方法。</p>
+<p>如果没有出错，返回的stanfit对象将包括从模型参数后验分布中抽取的样本以及模型中定义的其他量。如果出现错误（例如Stan程序中的语法错误），<code>stan</code>要么退出，要么返回一个不包含后验分布的stanfit对象。</p>
+<p>“<code>stanfit</code>”类定义了许多方法，如<code>print</code>和<code>plot</code>，用于处理MCMC样本。例如，下面使用<code>print</code>显示了八校模型的参数摘要：</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">print</span>(fit1, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">&quot;theta&quot;</span>, <span class="st">&quot;mu&quot;</span>, <span class="st">&quot;tau&quot;</span>, <span class="st">&quot;lp__&quot;</span>), <span class="at">probs=</span><span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">5</span>,.<span class="dv">9</span>))</span></code></pre></div>
+<pre><code>## Inference for Stan model: anon_model.
+## 4 chains, each with iter=2000; warmup=1000; thin=1; 
+## post-warmup draws per chain=1000, total post-warmup draws=4000.
+## 
+##            mean se_mean   sd    10%    50%    90% n_eff Rhat
+## theta[1]  11.50    0.16 8.37   2.53  10.40  21.94  2752    1
+## theta[2]   7.69    0.10 6.25  -0.08   7.68  15.51  4060    1
+## theta[3]   6.29    0.13 7.83  -3.34   6.70  15.14  3696    1
+## theta[4]   7.71    0.10 6.61  -0.50   7.70  15.88  4021    1
+## theta[5]   5.23    0.11 6.32  -2.92   5.62  12.69  3559    1
+## theta[6]   6.34    0.11 6.69  -1.89   6.72  14.18  3715    1
+## theta[7]  10.79    0.11 6.59   3.09  10.14  19.52  3619    1
+## theta[8]   8.40    0.14 8.02  -0.52   8.18  17.72  3283    1
+## mu         8.02    0.12 5.05   1.69   8.02  14.25  1862    1
+## tau        6.64    0.15 5.60   0.96   5.24  14.01  1432    1
+## lp__     -39.50    0.07 2.65 -43.00 -39.24 -36.37  1385    1
+## 
+## Samples were drawn using NUTS(diag_e) at Tue Nov  7 23:08:04 2023.
+## For each parameter, n_eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor on split chains (at 
+## convergence, Rhat=1).</code></pre>
+<p>输出的最后一行<code>lp__</code>是Stan计算的（未归一化的）后验密度的对数。这个后验密度对数可用于模型评估和比较（参见Vehtari
+&amp; Ojanen (2012)）。</p>
+<div id="stan函数的参数" class="section level4">
+<h4><code>stan</code>函数的参数</h4>
+<p>采样的主要参数（在函数<code>stan</code>和<code>sampling</code>中）包括数据、初始值和采样方法的选项，如<code>chains</code>、<code>iter</code>和<code>warmup</code>。其中，<code>warmup</code>指定了NUTS采样在采样开始前的预热阶段所使用的迭代次数。预热后，采样会关闭预热，并继续迭代，直到完成总迭代次数（包括预热）。理论上无法保证在预热过程中获得的抽样来自后验分布，因此预热抽样只能用于诊断，而不能用于推断。<code>print</code>方法显示的参数摘要仅使用预热后的抽样进行计算。</p>
+<p>可选的<code>init</code>参数可用于指定马尔科夫链的初始值。有几种方法可以指定初始值，详情请参见<code>stan</code>函数的文档。绝大多数情况下，让Stan随机生成自己的初始值就足够了。不过有时最好至少为Stan程序<code>parameter</code>模块中声明的对象的子集指定初始值。</p>
+<p>Stan使用的随机数生成器（random number generator,
+RNG）支持并行性。RNG的初始化由参数<code>seed</code>和<code>chain_id</code>决定。即使一次调用
+<code>stan</code>函数运行多条链，我们也只需指定一个种子，如果没有指定，种子将由R随机生成。</p>
+</div>
+<div id="数据预处理和传递" class="section level4">
+<h4>数据预处理和传递</h4>
+<p>传递给<code>stan</code>的数据将经过预处理。有关预处理的详细信息，请参阅<code>stan</code>函数的文档。这里我们强调几个重要步骤。首先，RStan允许用户传递比<code>data</code>模块中声明的更多对象作为数据（静默省略任何不必要的对象）。一般来说，从R传递给Stan的数据列表中的元素应为数值型，其维度应与模型<code>data</code>模块中的声明相匹配。例如，R中的<code>factor</code>类型不支持作为RStan的数据元素，必须通过<code>as.integer</code>转换为整型。Stan语言区分整型和双精度类型（在Stan语言中分别为
+<code>int</code>和<code>real</code>类型）。如果可能，<code>stan</code>函数会将一些R数据（通常是双精度数据）转换为整型。</p>
+<p>Stan语言有标量和其他标量集合类型，如向量、矩阵和数组。由于R没有真正的标量，RStan将长度为一的向量视为标量。然而，考虑一个<code>data</code>模块定义为</p>
+<pre><code>data {                
+  int&lt;lower=1&gt; N;      
+  real y[N];
+} </code></pre>
+<p>其中<code>N</code>可以为1，即个案。所以如果我们指导<code>N</code>始终大于1，我们可以使用R中长度为<code>N</code>的向量作为<code>y</code>的数据输入（比如，<code>y &lt;- rnorm(N)</code>）。如果我们想要防止RStan在<code>N</code>为1时将输入<code>y</code>的数据作为标量，我们需要将<code>y</code>转换为数组，R代码如下：</p>
+<pre><code>y &lt;- as.array(y)</code></pre>
+<p>Stan不能自动处理数据中的缺失值，所以数据中的任何元素不能含有<code>NA</code>值。RStan数据预处理的一个重要步骤是检查缺失值，如果发现任何缺失值，就会出错。不过，有多种方法可以编写可考虑缺失数据的Stan程序（参见Stan开发团队(2016)）。</p>
+</div>
+</div>
+<div id="用于stanfit类型的方法" class="section level3">
+<h3>用于<code>stanfit</code>类型的方法</h3>
+<p><strong>rstan</strong>包中的另一个简介更详细地讨论了<code>stanfit</code>对象，并举例说明了如何访问对象中包含的最重要内容（如后验绘图、诊断摘要）。此外，“<code>stanfit</code>”类的全部可用方法列表可在<code>help(&quot;stanfit&quot;, &quot;rstan&quot;)</code>的帮助文档中找到。这里我们仅举几个例子。</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">plot</span>(fit1)</span></code></pre></div>
+<pre><code>## &#39;pars&#39; not specified. Showing first 10 parameters by default.</code></pre>
+<pre><code>## ci_level: 0.8 (80% intervals)</code></pre>
+<pre><code>## outer_level: 0.95 (95% intervals)</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>可选的<code>plotfun</code>参数可用于从各种可用绘图中进行选择。请参阅<code>help(&quot;plot,stanfit-method&quot;)</code>.</p>
+<p>使用<code>traceplot</code>方法绘制后验抽样的轨迹图。如果我们通过设置<code>inc_warmup=TRUE</code>来包含预热抽样，预热区域的背景颜色就会与预热后阶段不同：</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">traceplot</span>(fit1, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;tau&quot;</span>), <span class="at">inc_warmup =</span> <span class="cn">TRUE</span>, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>为了评估马尔科夫链的收敛性，除了检查轨迹图我们还可以计算半分<span class="math inline">\(\hat{R}\)</span>统计量（split R
+statistic）。半分<span class="math inline">\(\hat{R}\)</span>是Gelman和Rubin（1992）提出的<span class="math inline">\(\hat{R}\)</span>的改进版，它基于将马尔科夫链分成两半。更多细节详见Stan手册。每个参数估计的<span class="math inline">\(\hat{R}\)</span>在<code>summary</code>和<code>print</code>输出中有一列显示。</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">print</span>(fit1, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;tau&quot;</span>))</span></code></pre></div>
+<pre><code>## Inference for Stan model: anon_model.
+## 4 chains, each with iter=2000; warmup=1000; thin=1; 
+## post-warmup draws per chain=1000, total post-warmup draws=4000.
+## 
+##     mean se_mean   sd  2.5%  25%  50%   75% 97.5% n_eff Rhat
+## mu  8.02    0.12 5.05 -2.02 4.76 8.02 11.20 18.08  1862    1
+## tau 6.64    0.15 5.60  0.24 2.50 5.24  9.27 20.51  1432    1
+## 
+## Samples were drawn using NUTS(diag_e) at Tue Nov  7 23:08:04 2023.
+## For each parameter, n_eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor on split chains (at 
+## convergence, Rhat=1).</code></pre>
+<p>更多详情，请再次参阅有关stanfi对象的附加简介。</p>
+</div>
+<div id="采样中的困难" class="section level3">
+<h3>采样中的困难</h3>
+<p>可视化模型输出的最佳方式是通过ShinyStan界面，该界面可通过<a href="https://cran.r-project.org/package=shinystan">shinystan</a>
+R包访问。ShinyStan既有助于参数分布的可视化，也有助于诊断采样的问题。<strong>shinystan</strong>包的帮助文档中提供了使用stanfit对象界面的说明。</p>
+<p>除了使用ShinyStan，还可以使用<strong>rstan</strong>包中的函数来诊断一些采样问题。<code>get_sampler_params</code>函数返回与采样性能有关的参数信息：</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co"># 所有链</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>sampler_params <span class="ot">&lt;-</span> <span class="fu">get_sampler_params</span>(fit1, <span class="at">inc_warmup =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">do.call</span>(rbind, sampler_params), <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##  accept_stat__    stepsize__      treedepth__   n_leapfrog__  divergent__   
+##  Min.   :0.00   Min.   : 0.027   Min.   :0.0   Min.   :  1   Min.   :0.000  
+##  1st Qu.:0.76   1st Qu.: 0.279   1st Qu.:3.0   1st Qu.:  7   1st Qu.:0.000  
+##  Median :0.95   Median : 0.349   Median :3.0   Median : 15   Median :0.000  
+##  Mean   :0.82   Mean   : 0.395   Mean   :3.4   Mean   : 12   Mean   :0.011  
+##  3rd Qu.:0.99   3rd Qu.: 0.422   3rd Qu.:4.0   3rd Qu.: 15   3rd Qu.:0.000  
+##  Max.   :1.00   Max.   :11.097   Max.   :7.0   Max.   :223   Max.   :1.000  
+##     energy__ 
+##  Min.   :35  
+##  1st Qu.:42  
+##  Median :44  
+##  Mean   :45  
+##  3rd Qu.:47  
+##  Max.   :63</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co"># 每条链分开</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">lapply</span>(sampler_params, summary, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [[1]]
+##  accept_stat__    stepsize__     treedepth__   n_leapfrog__  divergent__   
+##  Min.   :0.00   Min.   :0.027   Min.   :0.0   Min.   :  1   Min.   :0.000  
+##  1st Qu.:0.73   1st Qu.:0.349   1st Qu.:3.0   1st Qu.:  7   1st Qu.:0.000  
+##  Median :0.94   Median :0.349   Median :3.0   Median : 15   Median :0.000  
+##  Mean   :0.81   Mean   :0.400   Mean   :3.3   Mean   : 12   Mean   :0.012  
+##  3rd Qu.:0.99   3rd Qu.:0.398   3rd Qu.:4.0   3rd Qu.: 15   3rd Qu.:0.000  
+##  Max.   :1.00   Max.   :6.975   Max.   :7.0   Max.   :223   Max.   :1.000  
+##     energy__ 
+##  Min.   :35  
+##  1st Qu.:42  
+##  Median :44  
+##  Mean   :45  
+##  3rd Qu.:47  
+##  Max.   :59  
+## 
+## [[2]]
+##  accept_stat__    stepsize__     treedepth__   n_leapfrog__  divergent__   
+##  Min.   :0.00   Min.   :0.033   Min.   :0.0   Min.   :  1   Min.   :0.000  
+##  1st Qu.:0.76   1st Qu.:0.324   1st Qu.:3.0   1st Qu.:  7   1st Qu.:0.000  
+##  Median :0.95   Median :0.324   Median :3.0   Median : 15   Median :0.000  
+##  Mean   :0.82   Mean   :0.378   Mean   :3.4   Mean   : 13   Mean   :0.011  
+##  3rd Qu.:0.99   3rd Qu.:0.379   3rd Qu.:4.0   3rd Qu.: 15   3rd Qu.:0.000  
+##  Max.   :1.00   Max.   :7.442   Max.   :7.0   Max.   :127   Max.   :1.000  
+##     energy__ 
+##  Min.   :35  
+##  1st Qu.:42  
+##  Median :44  
+##  Mean   :45  
+##  3rd Qu.:47  
+##  Max.   :63  
+## 
+## [[3]]
+##  accept_stat__    stepsize__     treedepth__   n_leapfrog__  divergent__   
+##  Min.   :0.00   Min.   :0.032   Min.   :0.0   Min.   :  1   Min.   :0.000  
+##  1st Qu.:0.66   1st Qu.:0.395   1st Qu.:3.0   1st Qu.:  7   1st Qu.:0.000  
+##  Median :0.91   Median :0.422   Median :3.0   Median :  7   Median :0.000  
+##  Mean   :0.78   Mean   :0.435   Mean   :3.1   Mean   : 11   Mean   :0.013  
+##  3rd Qu.:0.98   3rd Qu.:0.422   3rd Qu.:3.0   3rd Qu.: 15   3rd Qu.:0.000  
+##  Max.   :1.00   Max.   :6.859   Max.   :7.0   Max.   :191   Max.   :1.000  
+##     energy__ 
+##  Min.   :35  
+##  1st Qu.:42  
+##  Median :44  
+##  Mean   :44  
+##  3rd Qu.:47  
+##  Max.   :61  
+## 
+## [[4]]
+##  accept_stat__    stepsize__     treedepth__   n_leapfrog__  divergent__   
+##  Min.   :0.00   Min.   : 0.04   Min.   :0.0   Min.   : 1    Min.   :0.000  
+##  1st Qu.:0.89   1st Qu.: 0.25   1st Qu.:3.0   1st Qu.: 7    1st Qu.:0.000  
+##  Median :0.98   Median : 0.25   Median :4.0   Median :15    Median :0.000  
+##  Mean   :0.88   Mean   : 0.37   Mean   :3.6   Mean   :13    Mean   :0.007  
+##  3rd Qu.:0.99   3rd Qu.: 0.44   3rd Qu.:4.0   3rd Qu.:15    3rd Qu.:0.000  
+##  Max.   :1.00   Max.   :11.10   Max.   :6.0   Max.   :95    Max.   :1.000  
+##     energy__ 
+##  Min.   :35  
+##  1st Qu.:42  
+##  Median :44  
+##  Mean   :44  
+##  3rd Qu.:47  
+##  Max.   :59</code></pre>
+<p>在这里我们可以看到有少量的发散转换（divergent
+transitions），这些分歧转换的标识是<code>divergent__</code>为1。理想情况下，预热阶段之后不应该出现发散转换。消除发散转换的最佳方法是提高目标接受概率，默认值为0.8。在这种情况下，<code>accept_stat__</code>的平均值接近0.8，但由于中位数接近<code>0.95</code>，因此分布非常偏态。我们可以回过头来再次调用
+<code>stan</code>，并指定可选参数<code>control=list(adapt_delta=0.9)</code>，尝试消除发散转换。不过，有时当目标接受率很高时，步长很小，采样每次迭代的跃迁步数就会达到极限。但这种情况不是一个问题，因为每个链的<code>treedepth__</code>最多为7
+而默认值是10。如何任何<code>treedepth__</code>为11，那么最好通过向<code>stan</code>传递
+<code>control=list(max_treedepth=12)</code>（举个例子）来提高限制。有关<code>get_sampler_params</code>返回对象结构的更多信息，请参阅stanfit对象简介。</p>
+<p>我们还可以使用<code>pairs</code>来表示（大部分）相同的信息。利用<code>pairs</code>可以了解尾部或图案附近是否存在采样困难的问题：</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">pairs</span>(fit1, <span class="at">pars =</span> <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;tau&quot;</span>, <span class="st">&quot;lp__&quot;</span>), <span class="at">las =</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## Warning in par(usr): argument 1 does not name a graphical parameter
+
+## Warning in par(usr): argument 1 does not name a graphical parameter
+
+## Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>在上图中，每个选定参数的边缘分布都以直方图的形式沿对角线标出。默认情况下，低于中位数<code>accept_stat__</code>（MCMC建议接受率）的抽样绘制在对角线下方，高于中位数<code>accept_stat__</code>的抽样绘制在对角线上方（可以使用条件参数进行更改）。每个对角线外的正方形代表行变量和列变量交叉点抽样的二元分布。理想情况下，同两个变量的对角线以下交集和对角线以上交集的分布应该互为镜像。任何黄点都表示达到<code>treedepth__</code>的过渡，红点表示发散转换。</p>
+</div>
+</div>
+<div id="其他问题" class="section level2">
+<h2>其他问题</h2>
+<div id="用户定义的stan函数" class="section level3">
+<h3>用户定义的Stan函数</h3>
+<p>Stan还允许用户定义自己的函数，这些函数可在整个Stan程序中使用。这些函数在<code>function</code>模板中定义。<code>function</code>模板是可选的，但如果存在，则必须放在任何其他模块之前。通过这种机制，用户可以实现统计分布或Stan目前不具备的其他功能。不过，即使用户的函数只是封装了对现有Stan函数的调用，如果将完成一个（或两个）任务的几行Stan代码替换为对用户定义函数的调用，<code>model</code>模块中的代码也会变得更加易读。</p>
+<p>使用用户自定义函数的另一个原因是，RStan提供了<code>expose_stan_functions</code>函数，用于将此类函数导出到R全局环境中，以便在R中对其进行测试，确保其工作正常。例如</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="st">functions {</span></span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="st">  real standard_normal_rng() {</span></span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="st">    return normal_rng(0,1);</span></span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a><span class="st">model {}</span></span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a><span class="st">&#39;</span></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a><span class="fu">expose_stan_functions</span>(<span class="fu">stanc</span>(<span class="at">model_code =</span> model_code))</span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a><span class="fu">standard_normal_rng</span>()</span></code></pre></div>
+<pre><code>## [1] -0.9529876</code></pre>
+</div>
+<div id="对数后验函数和梯度" class="section level3">
+<h3>对数后验（函数和梯度）</h3>
+<p>Stan定义了后验分布的概率密度函数的对数，但不包括一个加的未知常数。我们用<code>lp__</code>来表示每次迭代时该对数核的实现情况（<code>lp__</code>在摘要和半分<span class="math inline">\(\hat{R}\)</span>和有效样本量的计算中被视为未知量。</p>
+<p><strong>rstan</strong>包的一个特点是，它提供了用于计算给定stanfit对象的<code>lp__</code>及其梯度的函数。这两个函数分别是<code>log_prob</code>和<code>grad_log_prob</code>。这两个函数都使用无约束空间上的参数，即使参数不在整个实数轴上定义。Stan手册（Stan开发团队，2016）详细介绍了Stan用于从整个实轴映射到其中某个子空间（反之亦然）的特定变换。</p>
+<p>无约束参数的数量可能少于参数总数。例如，对于K个单纯形参数，实际上只有K-1个无约束参数，因为简单方程的所有元素都必须是非负数且总和为1。<code>get_num_upars</code>方法用于获取非约束参数的数量，而<code>unconstrain_pars</code>和<code>constrain_pars</code>方法则分别用于计算参数的非约束值和约束值。前者将参数列表作为输入，并将其转换为无约束向量，后者则相反。利用这些函数，我们可以实现贝叶斯模型的最大后验估计等其他算法。</p>
+</div>
+<div id="stan中的优化" class="section level3">
+<h3>Stan中的优化</h3>
+<p>RStan还提供了Stan优化器的接口，可以通过最大化Stan程序定义的似然函数（可能是受惩罚的）来获得点估计值。我们将用一个非常简单的例子来说明这一功能：从假定取自标准差已知的正态分布的样本中估计平均值。也就是说，我们假设</p>
+<p><span class="math display">\[y_n \sim \mathsf{Normal}(\mu,1), \quad n
+= 1, \ldots, N.\]</span></p>
+<p>通过确定先验<span class="math inline">\(p(\mu)\propto
+1\)</span>，<span class="math inline">\(\mu\)</span>的最大后验估计就是样本均值。由于<span class="math inline">\(p(\mu)\propto
+1\)</span>是默认先验，我们不需要额外的代码设置<span class="math inline">\(\mu\)</span>的先验。</p>
+<p>我们首先创建一个<code>&quot;stanmodel&quot;</code>类对象，然后使用优化方法，向该方法输入数据和其他参数。</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>ocode <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="st">  data {</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="st">    int&lt;lower=1&gt; N;</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a><span class="st">    real y[N];</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a><span class="st">  } </span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a><span class="st">  parameters {</span></span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a><span class="st">    real mu;</span></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a><span class="st">  } </span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a><span class="st">  model {</span></span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a><span class="st">    target += normal_lpdf(y | mu, 1);</span></span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a><span class="st">  } </span></span>
+<span id="cb31-12"><a href="#cb31-12" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb31-13"><a href="#cb31-13" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" tabindex="-1"></a>sm <span class="ot">&lt;-</span> <span class="fu">stan_model</span>(<span class="at">model_code =</span> ocode)</span>
+<span id="cb31-15"><a href="#cb31-15" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">mean</span>(y2)</span></code></pre></div>
+<pre><code>## [1] 0.1563328</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">optimizing</span>(sm, <span class="at">data =</span> <span class="fu">list</span>(<span class="at">y =</span> y2, <span class="at">N =</span> <span class="fu">length</span>(y2)), <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## $par
+##        mu 
+## 0.1563328 
+## 
+## $value
+## [1] -28.55551
+## 
+## $return_code
+## [1] 0
+## 
+## $hessian
+##     mu
+## mu -20
+## 
+## $theta_tilde
+##             mu
+## [1,] 0.1563328</code></pre>
+</div>
+<div id="模型编译" class="section level3">
+<h3>模型编译</h3>
+<p>正如前面提到的，Stan程序是用Stan语言编写的，翻译成C++代码后编译成动态共享对象（DSO）。然后由R加载DSO并执行以获得后验样本。将C++代码编译成DSO的过程有时需要一段时间。当模型相同时，我们可以重复使用之前运行的DSO。<code>stan</code>函数接受一个可选参数<code>fit</code>，它可以用来传递一个现有的拟合模型对象，从而重复使用编译后的模型。在重复使用以前的拟合模型时，我们仍然可以为<code>stan</code>的其他参数指定不同的值，包括为<code>data</code>参数传递不同的数据。</p>
+<p>此外，如果使用<code>save</code>和<code>save.image</code>等函数保存拟合模型，RStan还可以保存
+DSO，以便在不同的R会话中使用。要避免保存DSO，请在调用<code>stan</code>函数时指定<code>save_dso=FALSE</code>。</p>
+<p>如果用户执行<code>rstan_options(auto_write=TRUE)</code>，那么编译后模型的序列化版本将自动保存到硬盘中与<code>.stan</code>文件位于同一目录下，如果<code>Stan</code>程序以字符串形式表示，则保存到R的临时目录下。虽然根据CRAN的规定，默认情况下不启用该选项，但用户通常应该指定该选项，以消除冗余编译。</p>
+<p>当代码以最高优化级别编译时，Stan运行速度会快很多，大多数C++编译器的优化级别为-O3。然而，R的默认值是-O2，这对大多数R包来说都是合适的，但对Stan来说却会略微减慢运行速度。你可以按照<a href="https://cran.r-project.org/doc/manuals/r-release/R-admin.html#Customizing-package-compilation">CRAN
+-
+Customizing-package-compilation</a>中的说明在本地更改默认值。不过，需要注意的是，设置<code>CXXFLAGS = -O3</code>可能会对其他R包产生不利的副作用。</p>
+<p>有关Stan程序解析和编译的更多详情，请参阅<code>stanc</code>和<code>stan_model</code>函数的文档。</p>
+</div>
+<div id="并行运算多条链" class="section level3">
+<h3>并行运算多条链</h3>
+<p>运行马尔可夫链的数量可以通过<code>stan</code>或采样函数的<code>chains</code>参数来指定。默认情况下，链会使用父R进程串行执行（即一次执行一个）。还有一个可选的核心参数，可以设置为链的数量（如果硬件有足够的处理器和内存），这在大多数笔记本电脑上都是合适的。我们通常建议每个R会话先调用一次<code>options(mc.cores=parallel::detectCores())</code>，这样就可以使用所有可用的内核，而无需手动指定内核参数。</p>
+<p>对于使用不同并行化方案（可能是远程集群）的用户，<strong>rstan</strong>软件包提供了一个名为<code>sflist2stanfit</code>的函数，用于将多个stanfit对象（由相同的Stan程序创建，并使用相同的预热和采样迭代次数）合并为一个stanfit对象。为所有链指定相同的种子非常重要，使用不同的链ID（参数<code>chain_id</code>）也同样重要，两者结合可确保Stan中为所有链生成的随机数基本上是独立的。当<code>cores</code>大于1时这些会自动进行。</p>
+</div>
+</div>
+<div id="使用cmdstan" class="section level2">
+<h2>使用CmdStan</h2>
+<p><strong>rstan</strong>软件包提供了一些函数，用于为CmdStan（Stan的命令行接口）创建数据和读取输出。</p>
+<p>首先，当Stan读取数据或初始值时，它只支持R
+dump数据格式的语法子集。因此，如果我们使用基础R中的<code>dump</code>函数来准备数据，Stan可能无法读取其中的内容。<strong>rstan</strong>中的<code>stan_rdump</code>函数旨在将R中的数据转储为Stan支持的格式，其语义与<code>dump</code>函数非常相似。</p>
+<p>其次，<code>read_stan_csv</code>函数通过读取CmdStan生成的CSV文件创建stanfit对象。生成的stanfit对象与各种诊断和后验分析方法兼容。</p>
+</div>
+<div id="参见" class="section level2">
+<h2>参见</h2>
+<ul>
+<li><p>The <a href="https://discourse.mc-stan.org/">Stan Forums</a> on
+Discourse</p></li>
+<li><p>The <a href="https://mc-stan.org/rstan/articles/">other
+vignettes</a> for the rstan package, which show how to access the
+contents of stanfit objects and use external C++ in a Stan
+program.</p></li>
+<li><p>The very thorough <a href="https://mc-stan.org/users/documentation/">Stan manual</a> (The
+Stan Development Team 2016).</p></li>
+<li><p>The <code>stan_demo</code> function, which can be used to fit
+many of the example models in the manual.</p></li>
+<li><p>The <a href="https://mc-stan.org/bayesplot/">bayesplot</a>
+package for visual MCMC diagnostics, posterior predictive checking, and
+other plotting (ggplot based).</p></li>
+<li><p>The <a href="https://mc-stan.org/shinystan/">shinystan</a> R
+package, which provides a GUI for exploring MCMC output.</p></li>
+<li><p>The <a href="https://mc-stan.org/loo/">loo</a> R package, which
+is very useful for model comparison using stanfit objects.</p></li>
+<li><p>The <a href="https://mc-stan.org/rstanarm/">rstanarm</a> R
+package, which provides a glmer-style interface to Stan.</p></li>
+</ul>
+<hr />
+<p>Chambers, John M. 2008. <em>Software for Data Analysis : Programming
+with R</em>. New York: Springer.</p>
+<p>Gelman, Andrew, J. B. Carlin, Hal S. Stern, and Donald B. Rubin.
+2003. <em>Bayesian Data Analysis</em>. 2nd ed. London: CRC Press.</p>
+<p>Gelman, Andrew, and Donald B. Rubin. 1992. “Inference from Iterative
+Simulation Using Multiple Sequences.” <em>Statistical Science</em> 7
+(4): 457–72.</p>
+<p>Hoffman, Matthew D., and Andrew Gelman. 2012. “The No-U-Turn Sampler:
+Adaptively Setting Path Lengths in Hamiltonian Monte Carlo.” <em>Journal
+of Machine Learning Research</em>.</p>
+<p>Lunn, D.J., A. Thomas, N. Best, and D. Spiegelhalter. 2000. “WinBUGS
+— a Bayesian Modelling Framework: Concepts, Structure, and
+Extensibility.” <em>Statistics and Computing</em>, 325–37.</p>
+<p>Neal, Radford. 2011. “MCMC Using Hamiltonian Dynamics.” In
+<em>Handbook of Markov Chain Monte Carlo</em>, edited by Steve Brooks,
+Andrew Gelman, Galin L. Jones, and Xiao-Li Meng, 116–62. Chapman;
+Hall/CRC.</p>
+<p>R Core Team. 2014. <em>R: A Language and Environment for Statistical
+Computing</em>. Vienna, Austria: R Foundation for Statistical Computing.
+<a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+<p>Rubin, Donald B. 1981. “Estimation in Parallel Randomized
+Experiments.” <em>Journal of Educational and Behavioral Statistics</em>
+6 (4): 377–401.</p>
+<p>The Stan Development Team. 2014. “RStan Getting Started.” <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>.</p>
+<p>———. 2016. <em>Stan Modeling Language: User’s Guide and Reference
+Manual</em>. <a href="https://mc-stan.org" class="uri">https://mc-stan.org</a>.</p>
+<p>Vehtari, A., and J. Ojanen. 2012. “A Survey of Bayesian Predictive
+Methods for Model Assessment, Selection and Comparison.” <em>Statistics
+Surveys</em> 6: 142–228.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
