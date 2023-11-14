@@ -19,7 +19,7 @@ recalculate <- function(i,dataOld) {
   varf1 <- sum(vec[1:6]*(c(0.5,0.6,0.7,0.8,0.9,1.0)-f1)^2)/sum(vec[1:6])
   varf0 <- sum(vec[7:12]*(c(0.5,0.6,0.7,0.8,0.9,1.0)-f0)^2)/sum(vec[7:12])
   
-  scatf <- (varf1*23+varf0*17)/sum(vec[1:12])
+  scatf <- (varf1*n1+varf0*n0)/sum(vec[1:12])
   PS <- sum((1-c(0.5,0.6,0.7,0.8,0.9,1.0))^2*vec[1:6],
             (0-c(0.5,0.6,0.7,0.8,0.9,1.0))^2*vec[7:12])/sum(vec[1:12])
   
