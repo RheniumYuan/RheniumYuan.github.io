@@ -1,72 +1,249 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Rhenium Yuan</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="homepage/css/style.css" type="text/css" media="screen, projection, tv" />
-<link rel="stylesheet" href="css/style-print.css" type="text/css" media="print" />
-</head>
+    <title>Rhenium Yuan</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Boootstrap Portfolio/Resume Theme for Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+    <link rel="shortcut icon" href="favicon.ico">  
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> 
+    <!-- FontAwesome JS -->
+    <script defer src="assets/fontawesome/js/all.js"></script>   
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">      
+    <!-- github calendar css -->
+    <link rel="stylesheet" href="assets/plugins/github-calendar/dist/github-calendar-responsive.css">
+    <!-- github activity css -->    
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
+    <link rel="stylesheet" href="http://caseyscarborough.github.io/github-activity/github-activity-0.1.0.min.css">
+    <link rel="stylesheet" href="assets/plugins/github-activity/src/github-activity.css">
+    <!-- Theme CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
+    
+</head> 
+
 <body>
-<div id="wrapper">
-  <div class="title">
-    <div class="title-top">
-      <div class="title-left">
-        <div class="title-right">
-          <div class="title-bottom">
-            <div class="title-top-left">
-              <div class="title-bottom-left">
-                <div class="title-top-right">
-                  <div class="title-bottom-right">
-                    <h1><a href="#">Rhenium Yuan</a></h1>
-                    <p>Yuanpei College, Peking University</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <hr class="noscreen" />
-  <div class="content">
-    <div class="column-left">
-      <h3>MENU</h3>
-      <a href="#skip-menu" class="hidden">Skip menu</a>
-      <ul class="menu">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="homepage/cv.pdf">CV</a></li>
-        <li><a href="homepage/blog.html">Blog</a></li>
-        <li><a href="homepage/demo.html">Demo</a></li>
-        <li><a href="homepage/collection.html">Collection</a></li>
-        <li class="last"><a href="homepage/contact.html">Contact</a></li>
-      </ul>
-    </div>
-    <div id="skip-menu"></div>
-    <div class="column-right">
-      <div class="box">
-        <div class="box-top"></div>
-        <div class="box-in">
-          <h2>Welcome to my website</h2>
-          <p>I am a B.S. student in psychology at Yuanpei College, Peking University. Now I am focusing on computational psychiatry and working as a research assistant in <a href="https://www.ypeng.org/">DACN Lab</a> mentored by Prof. Yujia Peng.</p>
-          <p>I am intersted in programming and statistics, I have learnt Python, R, MATLAB(Psychtoolbox) and Javascript(jsPsych). Besides, I am intersted in meso and small-scale meteorology.</p>
-          <br />
-          <h2>Recently I am working on</h2>
-          <ul class="main-list">
-            <li>Interpretation bias in social anxiety</li>
-            <li>Bayesian modeling in psychiatry</li>
-            <li>Programming experiment with Javascript and jsPsych</li>
-          </ul>
-        </div>
-      </div>
-      <div class="box-bottom">
-        <hr class="noscreen" />
-        <!--<div class="footer-info-left"><a href="#">My personal website</a>, 2008. All rights reserved.</div>
-        <div class="footer-info-right"><a href="http://www.mantisatemplates.com/">Mantis-a templates</a></div>-->
-      </div>
-    </div>
-    <div class="cleaner">&nbsp;</div>
-  </div>
-</div>
+    <!-- ******HEADER****** --> 
+    <header class="header">
+        <div class="container">     
+	        <div class="row align-items-center">
+			    <div class="col">         
+		            <img class="profile-image img-fluid float-start rounded-circle" src="assets/images/photo.png" alt="profile image" />
+		            <div class="profile-content">
+		                <h1 class="name">Minghao Yuan 袁明昊</h1>
+		                <h2 class="desc">Peking University</h2>   
+		                <ul class="social list-inline">
+		                    <li class="list-inline-item"><a href="#"><i class="fa-brands fa-google"></i></a></li>
+                            <li class="list-inline-item"><a href="#"><i class="fa-brands fa-researchgate"></i></a></li>
+		                    <li class="list-inline-item"><a href="https://github.com/RheniumYuan"><i class="fab fa-github"></i></a></li> 
+                            <li class="list-inline-item"><a href="https://www.zhihu.com/people/bai-hai-jing-yu"><i class="fa-brands fa-zhihu"></i></a></li>                
+		                </ul> 
+		            </div><!--//profile-->
+			    </div><!--//col-->
+	            <div class="col-12 col-md-auto">
+		            <div class="dark-mode-switch d-flex">
+						<div class="form-check form-switch mx-auto mx-md-0">
+							<input type="checkbox" class="form-check-input me-2" id="darkSwitch" />
+							<label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+						</div>
+			        </div><!--//dark-mode-switch-->
+	            </div><!--//col-->
+	        </div><!--//row-->         
+        </div><!--//container-->
+    </header><!--//header-->
+    
+    <div class="container sections-wrapper py-5">
+        <div class="row">
+            <div class="primary col-lg-8 col-12">
+                <section class="about section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">About Me</h2>
+                        <div class="content">
+                            <p>I am a BS student in psychology at Yuanpei College, Peking University. 
+                                Now I am focusing on computational psychiatry and working as a research 
+                                assistant in <a href="https://www.ypeng.org/">Depression and Anxiety Computational 
+                                Neuroscience Lab</a> mentored by Professor Yujia Peng.</p> 
+                            <p>I am interested in social cognition in mood and anxiety disorder. My research method 
+                                includes behavioral experiments, computational modeling and machine learning. Recently 
+                                I am working on the project of cognitive bias in social anxiety with Yuxi Wang from DACN Lab.</p> 
+                        </div><!--//content-->
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+                
+                <section class="education section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Education</h2>
+                        <div class="content">
+                            <div class="item">                      
+                                <h3 class="title"><i class="fa fa-graduation-cap"></i> BS in Psychology</h3>
+                                <h4 class="university">Yuanpei College, Peking University <span class="year">(2022-2026)</span></h4>
+                                <h4 class="university">School of Psychological and Cognitive Sciences and Beijing Key Laboratory of Behavior and Mental Health, Peking University</h4>
+                            </div><!--//item-->
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </section><!--//section-->
+
+                <section class="experience section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Research Experience</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title">Research Assistant - <span class="place"><a href="https://www.ypeng.org/">DACN Lab</a></span> <span class="year">(2023 - Present)</span></h3>
+                                <p>Currently in a project on negative cognitive bias of social anxiety. 
+                                    My duties include conducting behavioral experiments, 
+                                    developing experiment programs, creating literature reviews and analyzing data.</p>
+                            </div><!--//item-->
+                            
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+
+                <section class="experience section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Honor and Rewards</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title"> The First Prize Scholarship - <span class="place">Peking University </span><span class="year">2023</span></h3>
+                                <h3 class="title"> Merit Student - <span class="place">Peking University </span><span class="year">2023</span></h3>
+                                <h3 class="title"> The 93rd-94th Soh Bing Scholarship - <span class="place">Soh Bing Scholarship Foundation </span><span class="year">2022</span></h3>
+                            </div><!--//item-->
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+
+                <section class="projects section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Projects</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title"><a href="#" target="_blank">Cue Effect in Emotion Induced Blindness</a> <span class="badge badge-theme">Open Source</span></h3>
+                                <p class="summary">A project for the course Experimental Psychology on the effect of emotion valence of cue and interference
+                                    on emotion induced blindness in RSVP.
+                                </p>
+                                <!--<p><a class="more-link" href="https://themes.3rdwavemedia.com/bootstrap-templates/resume/free-bootstrap4-resume-cv-template-for-developers-pillar/" target="_blank"><i class="fas fa-external-link-alt"></i>Download Now</a></p>-->
+                            </div><!--//item-->
+                            
+                            <a class="btn btn-cta-secondary" href="#">More on GitHub <i class="fas fa-chevron-right pt-1"></i></a>
+                            
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </section><!--//section-->
+                            
+            </div><!--//primary-->
+            <div class="secondary col-lg-4 col-12">
+                 <aside class="info aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading sr-only">Basic Information</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <i class="fa-solid fa-map-location-dot"></i></i><span class="sr-only">Location:</span>No.5 Yiheyuan Road, Haidian District, Beijing 100871, P.R.China</li>
+                                <li><i class="fa-regular fa-envelope"></i><span class="sr-only">Email:</span><a href="yuan_rhenium@stu.pku.edu.cn">yuan_rhenium@stu.pku.edu.cn</a></li>
+                                <li><i class="fa-regular fa-envelope"></i><span class="sr-only">Email:</span><a href="rheniumyuan@foxmail.com">rheniumyuan@foxmail.com</a></li>
+                                <li><i class="fa-brands fa-github"></i><span class="sr-only">Website:</span><a href="https://rheniumyuan.github.io/">rheniumyuan.github.io</a></li>
+                            </ul>
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </aside><!--//aside-->
+                
+                <aside class="skills aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Skills</h2>
+                        <div class="content">
+                            <p class="intro">
+                                I master multiple programming languages and statistical methods.
+                            <div class="skillset">
+                                <div class="item">
+                                    <h3 class="level-title">R <span class="level-label" data-bs-toggle="tooltip" data-bs-placement="left" title="Master in using R for statistical analysis and machine learning"><i class="fas fa-info-circle"></i>Master</span></h3>
+
+                                    <div class="level-bar progress">
+									    <div class="progress-bar level-bar-inner" role="progressbar" style="width: 94%" aria-valuenow="94"  aria-valuemin="0" aria-valuemax="94"></div>
+									</div><!--//level-bar-->                               
+                                </div><!--//item-->
+                                <div class="item">
+                                    <h3 class="level-title">C<span class="level-label" data-bs-toggle="tooltip" data-bs-placement="left" title="Achieved excellent grades in Introduction to Computation (B) and Data Structures and Algorithms (B) courses"><i class="fas fa-info-circle"></i>Proficient</span></h3>
+                                    <div class="level-bar progress">
+									    <div class="progress-bar level-bar-inner" role="progressbar" style="width: 84%" aria-valuenow="84"  aria-valuemin="0" aria-valuemax="84"></div>
+									</div><!--//level-bar-->                                   
+                                </div><!--//item-->
+                                
+                                <div class="item">
+                                    <h3 class="level-title">Python<span class="level-label" data-bs-toggle="tooltip" data-bs-placement="left" title="Competent in using python for data analysis and machine leatning."><i class="fas fa-info-circle"></i>Competent</span></h3>
+                                    <div class="level-bar progress">
+									    <div class="progress-bar level-bar-inner" role="progressbar" style="width: 70%" aria-valuenow="70"  aria-valuemin="0" aria-valuemax="70"></div>
+									</div><!--//level-bar-->                                  
+                                </div><!--//item-->
+                                
+                                <div class="item">
+                                    <h3 class="level-title">Javascript<span class="level-label" data-bs-toggle="tooltip" data-placement="left" title="Familiar with using Javascript (jsPsych) for behavioral experiment programming"><i class="fas fa-info-circle"></i>Familiar</span></h3>
+                                    <div class="level-bar progress">
+									    <div class="progress-bar level-bar-inner" role="progressbar" style="width: 60%" aria-valuenow="60"  aria-valuemin="0" aria-valuemax="60"></div>
+									</div><!--//level-bar-->                                  
+                                </div><!--//item-->
+
+                                <div class="item">
+                                    <h3 class="level-title">Matlab<span class="level-label" data-bs-toggle="tooltip" data-placement="left" title="Familiar with using Matlab (psychtoolbox) for behavioral experiment programming and data analysis"><i class="fas fa-info-circle"></i>Familiar</span></h3>
+                                    <div class="level-bar progress">
+									    <div class="progress-bar level-bar-inner" role="progressbar" style="width: 60%" aria-valuenow="60"  aria-valuemin="0" aria-valuemax="60"></div>
+									</div><!--//level-bar-->                                  
+                                </div><!--//item-->
+                                
+                            </div>              
+                        </div><!--//content-->  
+                    </div><!--//section-inner-->                 
+                </aside><!--//section-->
+
+                <aside class="list conferences aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Social Service</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><i class="fa fa-user"></i> Secretary-General, Youth Volunteer Association of Yuanpei College, 2023-2024</li>
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+                
+                <aside class="list music aside section">
+                    <div class="section-inner shadow-sm rounded">
+                        <h2 class="heading">Personal interests</h2>
+                        <div class="content">
+                            <ul class="list-unstyled">
+                                <li><i class="fa-brands fa-steam"></i> Paradox game player</li>
+                                <li><i class="fa-solid fa-hurricane"></i> Weather enthusiast</li>
+                                <li><i class="fa-brands fa-bilibili"></i> Bilibili content creator</li>
+                            </ul>
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </aside><!--//section-->
+              
+            </div><!--//secondary-->    
+        </div><!--//row-->
+    </div><!--//masonry-->
+    
+    <!-- ******FOOTER****** --> 
+    <footer class="footer">
+        <div class="container text-center">
+                <!--/* This template is free as long as you keep the attribution link below. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+                <small class="copyright">Designed with <span class="sr-only">love</span><i class="fas fa-heart"></i> by <a href="https://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+        </div><!--//container-->
+    </footer><!--//footer-->
+ 
+    <!-- Javascript -->          
+    <script type="text/javascript" src="assets/plugins/popper.min.js"></script> 
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>    
+    <script type="text/javascript" src="assets/plugins/vanilla-rss/dist/rss.global.min.js"></script> 
+    <script type="text/javascript" src="assets/plugins/dark-mode-switch/dark-mode-switch.min.js"></script> 
+    <!-- github calendar plugin -->
+    <script type="text/javascript" src="assets/plugins/github-calendar/dist/github-calendar.min.js"></script>
+    <!-- github activity plugin -->
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+    <script type="text/javascript" src="http://caseyscarborough.github.io/github-activity/github-activity-0.1.0.min.js"></script>
+    <!-- custom js -->
+    <script type="text/javascript" src="assets/js/main.js"></script>            
 </body>
-</html>
+</html> 
+
