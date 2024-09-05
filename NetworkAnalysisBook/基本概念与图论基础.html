@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 2 基本概念与图论基础 | R语言心理学网络分析应用</title>
+<meta name="author" content="Rhenium Yuan">
+<meta name="description" content="2.1 网络与图的概念  2.1.1 结点与边 网络（或图）1一般由结点和边组成。在心理学的网络分析中，结点（node或vertex）代表网络中的个体或实体，如心理特质、症状、因素、社会个体等等。边（edge）则表示结点之间的关系或连接，如相关性、因果关系、相互作用、社会关系等。  2.1.2 有向图与无向图 有向图（directed...">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
+<meta property="og:title" content="Chapter 2 基本概念与图论基础 | R语言心理学网络分析应用">
+<meta property="og:type" content="book">
+<meta property="og:description" content="2.1 网络与图的概念  2.1.1 结点与边 网络（或图）1一般由结点和边组成。在心理学的网络分析中，结点（node或vertex）代表网络中的个体或实体，如心理特质、症状、因素、社会个体等等。边（edge）则表示结点之间的关系或连接，如相关性、因果关系、相互作用、社会关系等。  2.1.2 有向图与无向图 有向图（directed...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 2 基本概念与图论基础 | R语言心理学网络分析应用">
+<meta name="twitter:description" content="2.1 网络与图的概念  2.1.1 结点与边 网络（或图）1一般由结点和边组成。在心理学的网络分析中，结点（node或vertex）代表网络中的个体或实体，如心理特质、症状、因素、社会个体等等。边（edge）则表示结点之间的关系或连接，如相关性、因果关系、相互作用、社会关系等。  2.1.2 有向图与无向图 有向图（directed...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R语言心理学网络分析应用</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> 引言</a></li>
+<li><a class="active" href="%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80.html"><span class="header-section-number">2</span> 基本概念与图论基础</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9E%84%E5%BB%BA.html"><span class="header-section-number">3</span> 网络的构建</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8F%8F%E8%BF%B0.html"><span class="header-section-number">4</span> 网络的描述</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90.html"><span class="header-section-number">5</span> 网络聚类分析</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%88%86%E6%9E%90.html"><span class="header-section-number">6</span> 网络分析的可靠性分析</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/rstudio/bookdown-demo">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="基本概念与图论基础" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> 基本概念与图论基础<a class="anchor" aria-label="anchor" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80"><i class="fas fa-link"></i></a>
+</h1>
+<div id="网络与图的概念" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> 网络与图的概念<a class="anchor" aria-label="anchor" href="#%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%9B%BE%E7%9A%84%E6%A6%82%E5%BF%B5"><i class="fas fa-link"></i></a>
+</h2>
+<div id="结点与边" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> 结点与边<a class="anchor" aria-label="anchor" href="#%E7%BB%93%E7%82%B9%E4%B8%8E%E8%BE%B9"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>网络（或图）</strong><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;有时候网络专门指有权的连通图，本教程中不区分图和网络&lt;/p&gt;"><sup>1</sup></a>一般由结点和边组成。在心理学的网络分析中，<strong>结点（node或vertex）</strong>代表网络中的个体或实体，如心理特质、症状、因素、社会个体等等。<strong>边（edge）</strong>则表示结点之间的关系或连接，如相关性、因果关系、相互作用、社会关系等。</p>
+</div>
+<div id="有向图与无向图" class="section level3" number="2.1.2">
+<h3>
+<span class="header-section-number">2.1.2</span> 有向图与无向图<a class="anchor" aria-label="anchor" href="#%E6%9C%89%E5%90%91%E5%9B%BE%E4%B8%8E%E6%97%A0%E5%90%91%E5%9B%BE"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>有向图（directed graph）</strong>中的边具有方向性，表示从一个结点指向另一个结点的关系。例如，微博上的关注关系就是有向的。在心理学的研究中，有时使用有向图来表示变量之间的因果关系。<strong>无向图（undirected graph）</strong>中的边没有方向性，表示结点之间的双向关系，如微信上的好友关系。很多临床心理学领域的网络分析就使用的是无向图，例如一个由多个变量之间的相关系数构成的网络就是无向图。下图就是一个关注多个临床心理学症状的网络分析的示例<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Fried, E. I., van Borkulo, C. D., Cramer, A. O. J., Boschloo, L., Schoevers, R. A., &amp;amp; Borsboom, D. (2017). Mental disorders as networks of problems: A review of recent insights. &lt;em&gt;Social Psychiatry and Psychiatric Epidemiology&lt;/em&gt;, &lt;em&gt;52&lt;/em&gt;(1), 1–10. &lt;a href="https://doi.org/10.1007/s00127-016-1319-z" class="uri"&gt;https://doi.org/10.1007/s00127-016-1319-z&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a>。</p>
+<div class="float">
+<img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs00127-016-1319-z/MediaObjects/127_2016_1319_Fig1_HTML.gif?as=webp" alt="A 患者个体的八种症状之间的配对关联；该网络基于时间序列数据，因此是一个有向图。 B 患者群体的八种症状之间的配对关联；该网络基于横断数据，因此是一个无向图。"><div class="figcaption">A 患者个体的八种症状之间的配对关联；该网络基于时间序列数据，因此是一个有向图。 B 患者群体的八种症状之间的配对关联；该网络基于横断数据，因此是一个无向图。</div>
+</div>
+</div>
+<div id="有权图与无权图" class="section level3" number="2.1.3">
+<h3>
+<span class="header-section-number">2.1.3</span> 有权图与无权图<a class="anchor" aria-label="anchor" href="#%E6%9C%89%E6%9D%83%E5%9B%BE%E4%B8%8E%E6%97%A0%E6%9D%83%E5%9B%BE"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>有权图（weighted graph）</strong>中的边具有权重，表示关系的强度或容量。例如，一个描述各种心理症状关系的网络中的权重可能是症状之间的偏相关系数。<strong>无权图（unweighted graph）</strong>中的边没有权重，表示关系的存在或不存在。</p>
+</div>
+<div id="图的表示邻接矩阵" class="section level3" number="2.1.4">
+<h3>
+<span class="header-section-number">2.1.4</span> 图的表示：邻接矩阵<a class="anchor" aria-label="anchor" href="#%E5%9B%BE%E7%9A%84%E8%A1%A8%E7%A4%BA%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>邻接矩阵（adjacency matrix）</strong>是一种表示图的方法，其中矩阵的行和列对应于图的结点，矩阵中的元素表示结点之间的边。例如，元素 <span class="math inline">\(A_{ij}\)</span> 表示结点 <span class="math inline">\(i\)</span> 和结点 <span class="math inline">\(j\)</span> 之间是否存在边。在有权图中，<span class="math inline">\(A_{ij}\)</span> 也表示两个结点之间的权重。</p>
+<p>例如，一个包括5个结点的网络的邻接矩阵如下：</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+0&amp; 2.5&amp; 0&amp; 0&amp; 7.8\\
+0&amp; 0&amp; 3.1&amp; 0&amp; 0\\
+0&amp; 0&amp; 0&amp; 4.6&amp; 0\\
+0&amp; 0&amp; 0&amp; 0&amp; 5.2\\
+0&amp; 0&amp; 0&amp; 0&amp; 0
+\end{bmatrix}
+\]</span></p>
+<p>可以绘制为这样的一个有向图：</p>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-1-1.png" width="672"></div>
+<p><em>当然我们也会发现，对于刚才的邻接矩阵，矩阵中的大部分元素都是0。这样的稀疏矩阵在存储时效率较低，当结点数量很庞大时会占用大量空间（空间复杂度<span class="math inline">\(O(n^2)\)</span>）。因此，除了使用邻接矩阵，我们也可以使用<strong>邻接表</strong>等方法表示一个图。</em></p>
+</div>
+<div id="在igraph里表示一个网络" class="section level3" number="2.1.5">
+<h3>
+<span class="header-section-number">2.1.5</span> 在igraph里表示一个网络<a class="anchor" aria-label="anchor" href="#%E5%9C%A8igraph%E9%87%8C%E8%A1%A8%E7%A4%BA%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>igraph</code>包是R语言中用于网络分析和图操作的强大工具。它提供了丰富的函数库，支持创建、操作、可视化和分析图结构。这一部分的教程将简单介绍<code>igraph</code>中一些重要的函数和操作。关于<code>igraph</code>的更多详细内容可以阅读该包的帮助文档或者访问<code>igraph</code>主页 <a href="https://r.igraph.org/" class="uri">https://r.igraph.org/</a>。</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://r.igraph.org/">'igraph'</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'igraph'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     decompose, spectrum</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     union</span></span></code></pre></div>
+<p>在<code>igraph</code>中，我们可以用一个igraph对象来表示一个网络。一般我们可以通过输入边列表或者邻接矩阵来创建igraph对象，我们也可以使用函数生成特定的随机网络。</p>
+<div id="从边列表创建" class="section level4" number="2.1.5.1">
+<h4>
+<span class="header-section-number">2.1.5.1</span> 从边列表创建<a class="anchor" aria-label="anchor" href="#%E4%BB%8E%E8%BE%B9%E5%88%97%E8%A1%A8%E5%88%9B%E5%BB%BA"><i class="fas fa-link"></i></a>
+</h4>
+<p>创建igraph对象最常用的方法是<code>make_graph</code>，它会根据指定的边构建一个网络。 例如，要创建一个有8个结点（编号为1至8）以及连接结点1-2、2-3、3-4三条边的有向图：</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">edges</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/make_graph.html">make_graph</a></span><span class="op">(</span><span class="va">edges</span>, n <span class="op">=</span> <span class="fl">8</span>, directed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>查看这个网络</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">g</span></span>
+<span><span class="co">#&gt; IGRAPH e4008f5 D--- 8 3 -- </span></span>
+<span><span class="co">#&gt; + edges from e4008f5:</span></span>
+<span><span class="co">#&gt; [1] 1-&gt;2 2-&gt;3 3-&gt;4</span></span></code></pre></div>
+</div>
+<div id="从邻接矩阵创建" class="section level4" number="2.1.5.2">
+<h4>
+<span class="header-section-number">2.1.5.2</span> 从邻接矩阵创建<a class="anchor" aria-label="anchor" href="#%E4%BB%8E%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%88%9B%E5%BB%BA"><i class="fas fa-link"></i></a>
+</h4>
+<p>另外一种比较常用的创建igraph对象的方法是从邻接矩阵创建。在心理学研究中，邻接矩阵往往相对容易获得，例如我们可以使用各种估计方法（如<code>qgraph</code>中的<code>EBICglasso</code>）获得变量之间的偏相关系数矩阵，这个偏相关系数矩阵就可以作为邻接矩阵创建我们的图。</p>
+<p>这个邻接矩阵可以表示无权图：</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">adjacent_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjacent_matrix</span><span class="op">)</span></span>
+<span><span class="va">g</span></span>
+<span><span class="co">#&gt; IGRAPH e407cfb D--- 10 12 -- </span></span>
+<span><span class="co">#&gt; + edges from e407cfb:</span></span>
+<span><span class="co">#&gt;  [1]  1-&gt; 5  2-&gt; 1  4-&gt; 4  4-&gt; 9  7-&gt; 5  7-&gt; 7  9-&gt; 1  9-&gt; 4</span></span>
+<span><span class="co">#&gt;  [9]  9-&gt; 6  9-&gt; 7  9-&gt;10 10-&gt;10</span></span></code></pre></div>
+<p>也可以表示有权图：</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">adjacent_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">0.02</span>, <span class="fl">0.02</span>, <span class="fl">0.02</span>, <span class="fl">0.02</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/graph_from_adjacency_matrix.html">graph_from_adjacency_matrix</a></span><span class="op">(</span><span class="va">adjacent_matrix</span>, weighted <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">g</span></span>
+<span><span class="co">#&gt; IGRAPH e40b87e D-W- 10 5 -- </span></span>
+<span><span class="co">#&gt; + attr: weight (e/n)</span></span>
+<span><span class="co">#&gt; + edges from e40b87e:</span></span>
+<span><span class="co">#&gt; [1]  2-&gt;2  4-&gt;8  6-&gt;6  9-&gt;7 10-&gt;9</span></span></code></pre></div>
+</div>
+<div id="生成随机网络" class="section level4" number="2.1.5.3">
+<h4>
+<span class="header-section-number">2.1.5.3</span> 生成随机网络<a class="anchor" aria-label="anchor" href="#%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E7%BD%91%E7%BB%9C"><i class="fas fa-link"></i></a>
+</h4>
+<p><code>igraph</code>为我们提供了一系列生成随机图的方法，这些函数一般以<code>sample</code>开头。例如，我们可以使用<code>sample_smallworld</code>生成一个Watts-Strogatz小世界网络。</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/sample_smallworld.html">sample_smallworld</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">50</span>, <span class="fl">5</span>, <span class="fl">0.05</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+<div class="rmdnote">
+<p>Watts-Strogatz小世界网络是一种特殊的复杂网络模型，由Duncan J. Watts和Steven Strogatz在1998年提出。这种网络模型结合了规则网络和随机网络的特性，具有高集聚系数（节点的邻居之间也有较高的连接概率，形成“团簇”）和短平均路径长度（尽管大部分节点彼此不直接相连，但通过少数几步就可以到达），能够很好地解释许多现实世界中的网络现象，如社交网络的“六度分隔”现象等。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="图论基础" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> 图论基础<a class="anchor" aria-label="anchor" href="#%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80"><i class="fas fa-link"></i></a>
+</h2>
+<div id="结点的度" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> 结点的度<a class="anchor" aria-label="anchor" href="#%E7%BB%93%E7%82%B9%E7%9A%84%E5%BA%A6"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>度（degree）</strong>是指一个结点连接的边的数量。在有向图中，度可以分为<strong>入度（in-degree）</strong>和<strong>出度（out-degree）</strong>，分别表示指向该结点的边数和从该结点出发的边数。结点的度可以表示为：</p>
+</div>
+<div id="路径" class="section level3" number="2.2.2">
+<h3>
+<span class="header-section-number">2.2.2</span> 路径<a class="anchor" aria-label="anchor" href="#%E8%B7%AF%E5%BE%84"><i class="fas fa-link"></i></a>
+</h3>
+<p>对于一个图，我们往往会关心一个结点和另一个结点之间的关系，而要研究两个结点之间的关系，就不得不先知道两个结点之间的路径。<strong>路径（path）</strong>是指在图中从一个结点到另一个结点的结点序列。路径的长度由路径上的边数决定。如果路径序列中结点不重复出现，那我们称这个路径为简单路径。路径可以帮助分析网络中结点之间的可达性和距离。在计算结点间的路径时，我们有时还会遇到环。<strong>环（loop）</strong>，又称<strong>回路</strong>，指的是第一个结点和最后一个结点相同的路径。</p>
+<p>有时从一个结点到另一个结点的路径可能有很多，但是这些路径之中一定有一个<strong>最短路径</strong>，即路径上边的权重之和最小的路径。而这个最短路径就是两个结点之间的距离。</p>
+<div class="rmdnote">
+<p><strong>Dijkstra算法</strong></p>
+<p>Dijkstra算法是荷兰计算机科学家Edsger W. Dijkstra于1956年提出的一种用于计算有权图中最短路径的经典算法。该算法适用于包含非负权重的有向图和无向图。</p>
+<p>Dijkstra算法的核心思想是通过贪心策略逐步扩展最近的未处理结点，并更新其邻居结点的距离，直到所有结点的最短路径都确定。具体步骤如下：</p>
+<ol style="list-style-type: decimal">
+<li><p>初始化：从起始结点开始，设置起始结点到自身的距离为0，其他结点的距离为无穷大。将所有结点标记为未访问。</p></li>
+<li><p>选择结点：从未访问的结点中选择一个距离起始结点最近的结点作为当前结点。</p></li>
+<li><p>更新距离：对于当前结点的每个邻居结点，计算从起始结点经过当前结点到达该邻居结点的距离。如果该距离小于当前记录的距离，则更新该邻居结点的距离。</p></li>
+<li><p>标记访问：将当前结点标记为已访问。</p></li>
+<li><p>重复：重复步骤2到4，直到所有结点都被访问。</p></li>
+</ol>
+</div>
+<p>在<code>igraph</code>中，我们可以使用<code>shortest_paths</code>计算结点之间的最短路径。注意，要计算最短路径时，我们需要将网络中的边权重视为结点之间的距离，然而这在某些心理学网络的分析中是不合适的。比如，对于一个由偏相关系数矩阵构建的网络，结点A与结点B的边权重很大意味着两个结点的关联很紧密，但是在计算最短路径时二者的距离将视为很远。最短路径往往是在社交网络的分析中使用。</p>
+<p>现在我们采用<code>igraph</code>主页的示例生成一个简单的社交网络计算最短路径。</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">social_network</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/make_graph.html">make_graph</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span> <span class="va">Alice</span> <span class="op">-</span> <span class="va">Boris</span><span class="op">:</span><span class="va">Himari</span><span class="op">:</span><span class="va">Moshe</span>, <span class="va">Himari</span> <span class="op">-</span> <span class="va">Alice</span><span class="op">:</span><span class="va">Nang</span><span class="op">:</span><span class="va">Moshe</span><span class="op">:</span><span class="va">Samira</span>,</span>
+<span>  <span class="va">Ibrahim</span> <span class="op">-</span> <span class="va">Nang</span><span class="op">:</span><span class="va">Moshe</span>, <span class="va">Nang</span> <span class="op">-</span> <span class="va">Samira</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">social_network</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="01-intro_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://r.igraph.org/reference/distances.html">shortest_paths</a></span><span class="op">(</span><span class="va">social_network</span>, <span class="st">"Alice"</span>, <span class="st">"Nang"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $vpath</span></span>
+<span><span class="co">#&gt; $vpath[[1]]</span></span>
+<span><span class="co">#&gt; + 3/7 vertices, named, from e41eab2:</span></span>
+<span><span class="co">#&gt; [1] Alice  Himari Nang  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $epath</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $predecessors</span></span>
+<span><span class="co">#&gt; NULL</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $inbound_edges</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<p>我们也可以用<code>distances</code>计算结点之间的距离矩阵。</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://r.igraph.org/reference/distances.html">distances</a></span><span class="op">(</span><span class="va">social_network</span><span class="op">)</span></span>
+<span><span class="co">#&gt;         Alice Boris Himari Moshe Nang Samira Ibrahim</span></span>
+<span><span class="co">#&gt; Alice       0     1      1     1    2      2       2</span></span>
+<span><span class="co">#&gt; Boris       1     0      2     2    3      3       3</span></span>
+<span><span class="co">#&gt; Himari      1     2      0     1    1      1       2</span></span>
+<span><span class="co">#&gt; Moshe       1     2      1     0    2      2       1</span></span>
+<span><span class="co">#&gt; Nang        2     3      1     2    0      1       1</span></span>
+<span><span class="co">#&gt; Samira      2     3      1     2    1      0       2</span></span>
+<span><span class="co">#&gt; Ibrahim     2     3      2     1    1      2       0</span></span></code></pre></div>
+</div>
+<div id="连通性" class="section level3" number="2.2.3">
+<h3>
+<span class="header-section-number">2.2.3</span> 连通性<a class="anchor" aria-label="anchor" href="#%E8%BF%9E%E9%80%9A%E6%80%A7"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>连通性（connectivity）</strong>描述了图中结点之间的连接程度。如果图中任意两个结点之间都存在路径我们就称这个图是连通的。连通性可以帮助识别网络中的孤立结点和子图。</p>
+<p>一个无向图中的极大连通子图称为连通分量（一个图可有多个）。在有向图中，如果对于每一对结点<span class="math inline">\(i\)</span>和<span class="math inline">\(j\)</span>，从<span class="math inline">\(i\)</span>到<span class="math inline">\(j\)</span>和从<span class="math inline">\(j\)</span>到<span class="math inline">\(i\)</span>都存在路径，则称这个图是强连通图。有向图中的极大强连通子图称为强连通分量。</p>
+<div class="rmdnote">
+<p><strong>图的遍历</strong></p>
+<p>图的遍历指的是从图中某一结点出发访遍图中其余结点，且使每一个结点被访问且仅被访问一次。图的遍历算法是求解图的连通性问题、拓扑问题等算法的基础。图的遍历通常有两种方法：深度优先搜索（Depth-First Search, DFS）和广度优先搜索（Breadth-First Search, BFS）。</p>
+<p><strong>深度优先搜索</strong>：从图的指定结点<span class="math inline">\(v\)</span>出发，先访问结点<span class="math inline">\(v\)</span>，并将其标记为已访问过，然后依次从<span class="math inline">\(v\)</span>的未被访问过的邻接结点<span class="math inline">\(w\)</span>出发进行深度优先搜索，直到图中与<span class="math inline">\(v\)</span>相连的所有结点都被访问过。如果图中还有未被访问的结点，则从另一未被访问过的结点出发重复上述过程，直到图中所有结点都被访问过为止。</p>
+<p><strong>广度优先搜索</strong>：从图的指定结点<span class="math inline">\(v\)</span>出发，先访问结点<span class="math inline">\(v\)</span>，接着依次访问<span class="math inline">\(v\)</span>的所有邻结点<span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span>, … , <span class="math inline">\(w_x\)</span>，然后，再依次访问与<span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span>, …, <span class="math inline">\(w_x\)</span> 邻接的所有未被访问过的结点，以此类推，直到所有已访问结点的邻接结点都被访问过为止。如果图中还有未被访问过的结点，则从另一未被访问过的结点出发进行广度优先搜索，直到所有结点都被访问过为止。</p>
+</div>
+
+</div>
+</div>
+</div>
+
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"><span class="header-section-number">1</span> 引言</a></div>
+<div class="next"><a href="%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9E%84%E5%BB%BA.html"><span class="header-section-number">3</span> 网络的构建</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="header-section-number">2</span> 基本概念与图论基础</a></li>
+<li>
+<a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%9B%BE%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="header-section-number">2.1</span> 网络与图的概念</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E4%B8%8E%E8%BE%B9"><span class="header-section-number">2.1.1</span> 结点与边</a></li>
+<li><a class="nav-link" href="#%E6%9C%89%E5%90%91%E5%9B%BE%E4%B8%8E%E6%97%A0%E5%90%91%E5%9B%BE"><span class="header-section-number">2.1.2</span> 有向图与无向图</a></li>
+<li><a class="nav-link" href="#%E6%9C%89%E6%9D%83%E5%9B%BE%E4%B8%8E%E6%97%A0%E6%9D%83%E5%9B%BE"><span class="header-section-number">2.1.3</span> 有权图与无权图</a></li>
+<li><a class="nav-link" href="#%E5%9B%BE%E7%9A%84%E8%A1%A8%E7%A4%BA%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5"><span class="header-section-number">2.1.4</span> 图的表示：邻接矩阵</a></li>
+<li><a class="nav-link" href="#%E5%9C%A8igraph%E9%87%8C%E8%A1%A8%E7%A4%BA%E4%B8%80%E4%B8%AA%E7%BD%91%E7%BB%9C"><span class="header-section-number">2.1.5</span> 在igraph里表示一个网络</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="header-section-number">2.2</span> 图论基础</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%E7%BB%93%E7%82%B9%E7%9A%84%E5%BA%A6"><span class="header-section-number">2.2.1</span> 结点的度</a></li>
+<li><a class="nav-link" href="#%E8%B7%AF%E5%BE%84"><span class="header-section-number">2.2.2</span> 路径</a></li>
+<li><a class="nav-link" href="#%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="header-section-number">2.2.3</span> 连通性</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/rstudio/bookdown-demo/blob/master/01-intro.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/rstudio/bookdown-demo/edit/master/01-intro.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R语言心理学网络分析应用</strong>" was written by Rhenium Yuan. It was last built on 2024-09-05.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -4,19 +4,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 1 引言 | R语言网络分析应用</title>
+<title>Chapter 1 引言 | R语言心理学网络分析应用</title>
 <meta name="author" content="Rhenium Yuan">
 <meta name="description" content="&lt;p&gt;This is a minimal example of using the bookdown package to write a book.
 The HTML output format for this example is bookdown::bs4_book,
 set in the _output.yml file.&lt;/p&gt;">
 <meta name="generator" content="bookdown 0.39 with bs4_book()">
-<meta property="og:title" content="Chapter 1 引言 | R语言网络分析应用">
+<meta property="og:title" content="Chapter 1 引言 | R语言心理学网络分析应用">
 <meta property="og:type" content="book">
 <meta property="og:description" content="&lt;p&gt;This is a minimal example of using the bookdown package to write a book.
 The HTML output format for this example is bookdown::bs4_book,
 set in the _output.yml file.&lt;/p&gt;">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 1 引言 | R语言网络分析应用">
+<meta name="twitter:title" content="Chapter 1 引言 | R语言心理学网络分析应用">
 <meta name="twitter:description" content="&lt;p&gt;This is a minimal example of using the bookdown package to write a book.
 The HTML output format for this example is bookdown::bs4_book,
 set in the _output.yml file.&lt;/p&gt;">
@@ -37,7 +37,7 @@ set in the _output.yml file.&lt;/p&gt;">
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">R语言网络分析应用</a>
+        <a href="index.html" title="">R语言心理学网络分析应用</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -50,10 +50,11 @@ set in the _output.yml file.&lt;/p&gt;">
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html"><span class="header-section-number">1</span> 引言</a></li>
-<li><a class="" href="%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.html"><span class="header-section-number">2</span> 网络和图的基本概念</a></li>
-<li><a class="" href="igraph%E5%8C%85%E7%9A%84%E4%BD%BF%E7%94%A8.html"><span class="header-section-number">3</span> igraph包的使用</a></li>
-<li><a class="" href="qgraph%E5%8C%85%E7%9A%84%E4%BD%BF%E7%94%A8.html"><span class="header-section-number">4</span> qgraph包的使用</a></li>
-<li><a class="" href="networktoolbox%E7%9A%84%E4%BD%BF%E7%94%A8.html"><span class="header-section-number">5</span> NetworkToolbox的使用</a></li>
+<li><a class="" href="%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80.html"><span class="header-section-number">2</span> 基本概念与图论基础</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9E%84%E5%BB%BA.html"><span class="header-section-number">3</span> 网络的构建</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E7%9A%84%E6%8F%8F%E8%BF%B0.html"><span class="header-section-number">4</span> 网络的描述</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E8%81%9A%E7%B1%BB%E5%88%86%E6%9E%90.html"><span class="header-section-number">5</span> 网络聚类分析</a></li>
+<li><a class="" href="%E7%BD%91%E7%BB%9C%E5%88%86%E6%9E%90%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%88%86%E6%9E%90.html"><span class="header-section-number">6</span> 网络分析的可靠性分析</a></li>
 </ul>
 
         <div class="book-extra">
@@ -65,20 +66,66 @@ set in the _output.yml file.&lt;/p&gt;">
 <h1>
 <span class="header-section-number">1</span> 引言<a class="anchor" aria-label="anchor" href="#%E5%BC%95%E8%A8%80"><i class="fas fa-link"></i></a>
 </h1>
-<p>本教程简单介绍网络分析（network analysis）的一些基本方法及其在R语言中的应用。教程将首先从网络（network）或图（graph，和网络在这个教程中是一个意思）开始，简单介绍一些网络和图的相关概念，然后将介绍<code>igraph</code>、<code>qgraph</code>、<code>NetworkToolbox</code>等网络分析常用R包和相关操作。</p>
+<p>本教程简单介绍网络分析（network analysis）的一些基本方法及其在R语言中的应用。教程将首先从网络（network）或图（graph，和网络在这个教程中是一个意思）开始，简单介绍一些网络和图论的相关概念、心理学常用的网络分析方法（网络估计、网络的描述、网络分析的稳健性等）以及<code>igraph</code>、<code>qgraph</code>、<code>NetworkToolbox</code>等网络分析常用R包和相关操作。</p>
 <p>网络分析是心理学和社会科学研究中的一种常见的方法。在网络分析中，各种变量（心理特质、症状、因素、社会个体等等）被视为网络中的结点（node或者vertex），这些结点之间的直接联系使用边（edge）来表示。通过分析由这些结点和边构成的网络，我们能够得到一些新的发现。例如，在临床心理学领域，心理障碍是往往由由症状之间的相互作用导致的，而网络分析可以帮助我们理解这个由症状形成的网络。</p>
-<p>由于本人的研究领域关注临床心理学，因此本教程中的相关介绍也主要是在这一领域的研究中经常使用的方法，而一些其他研究领域中常用的网络分析方法可能并不在介绍范围内。</p>
-<p>关于心理学中的网络分析（特别是临床心理学领域）方法与进展，可以阅读以下的一些研究：</p>
+<p>由于本人的研究领域关注临床心理学，因此本教程中的相关介绍也主要是在这一领域的研究中经常使用的方法，而一些其他研究领域中常用的网络分析方法（如社交网络）可能并不在介绍范围内。</p>
+<p>在本教程中会使用如下的R包，在开始之前请提前安装。</p>
+<pre><code>#&gt; 
+#&gt; Attaching package: 'igraph'
+#&gt; The following objects are masked from 'package:stats':
+#&gt; 
+#&gt;     decompose, spectrum
+#&gt; The following object is masked from 'package:base':
+#&gt; 
+#&gt;     union
+#&gt; Package: NetworkToolbox: Methods and Measures for Brain, Cognitive, and Psychometric
+#&gt; Network Analysis
+#&gt; Version: 1.4.2
+#&gt; Updated on: 2021-05-26
+#&gt; Maintainer: Alexander P. Christensen, University of North Carolina at Greensboro
+#&gt; Contributors: Guido Previde Massara, University College London
+#&gt;  For citation information, type citation("NetworkToolbox")
+#&gt;  For vignettes, see &lt;https://doi.org/10.32614/RJ-2018-065&gt; 
+#&gt;  For bugs and errors, submit an issue to &lt;https://github.com/AlexChristensen/NetworkToolbox/issues&gt;
+#&gt; 
+#&gt; Attaching package: 'NetworkToolbox'
+#&gt; The following object is masked from 'package:qgraph':
+#&gt; 
+#&gt;     smallworldness
+#&gt; The following objects are masked from 'package:igraph':
+#&gt; 
+#&gt;     betweenness, closeness, degree, diversity,
+#&gt;     strength, transitivity
+#&gt; Loading required package: ggplot2
+#&gt; This is bootnet 1.6
+#&gt; For questions and issues, please see github.com/SachaEpskamp/bootnet.
+#&gt; 
+#&gt; Attaching package: 'bootnet'
+#&gt; The following object is masked from 'package:NetworkToolbox':
+#&gt; 
+#&gt;     binarize
+#&gt; 
+#&gt; Attaching package: 'psych'
+#&gt; The following objects are masked from 'package:ggplot2':
+#&gt; 
+#&gt;     %+%, alpha
+#&gt; The following objects are masked from 'package:NetworkToolbox':
+#&gt; 
+#&gt;     cor2cov, distance
+#&gt; Loading required package: Rcpp</code></pre>
+<p>另外，本教程默认读者有一定R语言编程基础，在开始教程之前请先了解一下R语言的一些基础语法和分析操作。</p>
+<p>关于心理学中的网络分析（特别是临床心理学领域）方法与进展，可以阅读以下的一些材料：</p>
 <ul>
 <li><p>蔡玉清, 董书阳, 袁帅 &amp; 胡传鹏. (2020). 变量间的网络分析模型及其应用. <em>心理科学进展</em>, (01), 178-195. <a href="https://doi.org/10.3724/SP.J.1042.2020.00178" class="uri">https://doi.org/10.3724/SP.J.1042.2020.00178</a></p></li>
 <li><p>Borsboom, D., Deserno, M. K., Rhemtulla, M., Epskamp, S., Fried, E. I., McNally, R. J., Robinaugh, D. J., Perugini, M., Dalege, J., Costantini, G., Isvoranu, A.-M., Wysocki, A. C., van Borkulo, C. D., van Bork, R., &amp; Waldorp, L. J. (2021). Network analysis of multivariate data in psychological science. <em>Nature Reviews Methods Primers</em>, <em>1</em>(1), 1–18. <a href="https://doi.org/10.1038/s43586-021-00055-w" class="uri">https://doi.org/10.1038/s43586-021-00055-w</a></p></li>
 <li><p>Borsboom, D., &amp; Cramer, A. O. J. (2013). Network Analysis: An Integrative Approach to the Structure of Psychopathology. <em>Annual Review of Clinical Psychology</em>, <em>9</em>(1), 91–121. <a href="https://doi.org/10.1146/annurev-clinpsy-050212-185608" class="uri">https://doi.org/10.1146/annurev-clinpsy-050212-185608</a></p></li>
 <li><p>Fried, E. I., van Borkulo, C. D., Cramer, A. O. J., Boschloo, L., Schoevers, R. A., &amp; Borsboom, D. (2017). Mental disorders as networks of problems: A review of recent insights. <em>Social Psychiatry and Psychiatric Epidemiology</em>, <em>52</em>(1), 1–10. <a href="https://doi.org/10.1007/s00127-016-1319-z" class="uri">https://doi.org/10.1007/s00127-016-1319-z</a></p></li>
+<li><p>Isvoranu, A.-M., Epskamp, S., Waldorp, L., &amp; Borsboom, D. (Eds.). (2022). Network Psychometrics with R: A Guide for Behavioral and Social Scientists (1st ed.). Routledge. <a href="https://doi.org/10.4324/9781003111238" class="uri">https://doi.org/10.4324/9781003111238</a></p></li>
 </ul>
 </div>
   <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%BE%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.html"><span class="header-section-number">2</span> 网络和图的基本概念</a></div>
+<div class="next"><a href="%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80.html"><span class="header-section-number">2</span> 基本概念与图论基础</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav"><li><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="header-section-number">1</span> 引言</a></li></ul>
@@ -98,7 +145,7 @@ set in the _output.yml file.&lt;/p&gt;">
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R语言网络分析应用</strong>" was written by Rhenium Yuan. It was last built on 2024-08-25.</p>
+    <p>"<strong>R语言心理学网络分析应用</strong>" was written by Rhenium Yuan. It was last built on 2024-09-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
