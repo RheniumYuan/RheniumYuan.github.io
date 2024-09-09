@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel 数据查询</title>
+</head>
+<body>
+    <h1>查询 Excel 数据</h1>
+
+    <label for="search-id">请输入学号:</label>
+    <input type="text" id="search-id">
+    
+    <label for="search-name">请输入姓名:</label>
+    <input type="text" id="search-name">
+    
+    <button id="search-button">查询</button>
+
+    <h2>查询结果:</h2>
+    <div id="result"></div>
+
+    <!-- 引入 SheetJS 库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <!-- 引入外部 JS 文件 -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
