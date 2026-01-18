@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>情绪评分实验</title>
+    <script src="https://unpkg.com/jspsych@7.3.4"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-call-function@1.1.3"></script>
+    <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css" rel="stylesheet" type="text/css">
+    <style>
+        /* 基本页面样式 - 使用全宽 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            width: 100%;
+        }
+        
+        /* 修改jsPsych容器为全宽 */
+        .jspsych-display-element {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            background-color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+        
+        /* 主要内容容器 - 居中但不限制宽度 */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+        }
+        
+        /* 压缩纵向空间 */
+        .scenario-text {
+            font-size: 17px;
+            line-height: 1.5;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            min-height: 80px;
+            text-align: left;
+        }
+        
+        /* 压缩量表块的上下边距 - 设置固定宽度 */
+        .rating-section {
+            margin: 12px auto; /* 减少上下外边距 */
+            padding: 10px; /* 减少内边距 */
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background-color: #fafafa;
+            text-align: center;
+            max-width: 900px; /* 量表最大宽度 */
+            width: 95%; /* 相对宽度 */
+        }
+        
+        .rating-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 6px; /* 减少标题与量表间距 */
+            color: #333;
+            text-align: center;
+        }
+        
+        /* 进一步压缩具体情绪评分的行距 */
+        .emotion-row {
+            display: flex;
+            align-items: center;
+            margin: 6px 0; /* 减少行间距 */
+            padding: 5px 0; /* 减少内边距 */
+            min-height: 35px; /* 减少最小高度 */
+        }
+        
+        .emotion-label {
+            width: 100px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            padding-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        /* 优化量表容器 */
+        .radio-group-container {
+            flex-grow: 1;
+            margin-left: 10px;
+            position: relative;
+        }
+        
+        .radio-group {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding-top: 18px; /* 减少标签与选项间距 */
+            width: 100%;
+        }
+        
+        .radio-option {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0; /* 防止选项被压缩 */
+        }
+        
+        /* 调整单选按钮大小和间距 */
+        input[type="radio"] {
+            margin: 0;
+            transform: scale(1.1);
+            margin-bottom: 2px; /* 减少单选按钮下方间距 */
+        }
+        
+        /* 文字标签样式 - 改进对齐 */
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #444;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 18px; /* 减少高度 */
+            align-items: center;
+            padding: 0;
+        }
+        
+        /* 优化标签对齐 - 向内移动 */
+        .scale-label {
+            position: absolute;
+            text-align: center;
+            width: 70px; /* 减小标签宽度 */
+            line-height: 1.2;
+            font-size: 10.5px; /* 稍微减小字体 */
+        }
+        
+        /* 调整标签位置，使其更靠近中心 */
+        .scale-label-left {
+            left: 8%; /* 向左移动 */
+            text-align: left;
+            transform: translateX(0);
+        }
+        
+        .scale-label-center {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .scale-label-right {
+            right: 8%; /* 向右移动 */
+            text-align: right;
+            transform: translateX(0);
+        }
+        
+        /* 调整伪元素宽度以匹配新的标签位置 */
+        .radio-group::before,
+        .radio-group::after {
+            content: '';
+            flex: 0 0 30px; /* 减少边缘空间 */
+        }
+        
+        .required-star {
+            color: red;
+        }
+        
+        button.jspsych-btn {
+            font-size: 16px;
+            padding: 10px 30px;
+            margin-top: 12px; /* 减少按钮上方间距 */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        button.jspsych-btn:hover {
+            background-color: #45a049;
+        }
+        
+        /* 指导语样式 */
+        .instruction-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .instructions {
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: left;
+            margin: 15px 0;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+        }
+        
+        .error-message {
+            color: red;
+            margin: 8px 0; /* 减少错误信息间距 */
+            text-align: center;
+            display: none;
+            font-size: 14px;
+        }
+        
+        h3 {
+            margin: 8px 0 12px 0; /* 减少标题间距 */
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 15px; /* 减少标题下方间距 */
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 初始化jsPsych
+        const jsPsych = initJsPsych({
+            show_progress_bar: true,
+            auto_update_progress_bar: true,
+            on_finish: function() {
+                jsPsych.data.displayData();
+            }
+        });
+
+        // 实验参数
+        const NUM_TEXTS = 5; // 每个被试评价5条文本
+        
+        // CSV数据
+        const csvData = `chinese
+我出门前查看了天气预报，显示当天无雨。我带了伞以防万一，但最终没用上。天空一直晴朗，我顺利到达办公室，没有遇到任何问题。我的计划按预期顺利执行。
+我将闹钟定在早上6:30，以确保有足够时间准备上班。我列出了需要完成的任务，包括查看邮件和准备午餐。我按照计划一步步执行，顺利按时离开家。整个流程如预期进行，我带着所有必需品抵达办公室。
+我早起准备早餐。我查看冰箱，发现鸡蛋还新鲜，牛奶未过期，面包也还没变质。我做了简单的炒蛋和吐司，花了大约十分钟。邻居敲门问我是否看到他们的走失猫咪。我指了指公园，那是他们最后见到它的地方。他们表示感谢，并说会去那里查看。我知道自己帮上了忙，感到安心。
+我把闹钟定在早上7点，准时起床。我准备了早餐，收拾好包，按时出门上班。路上车流比平常少，我比平时早到了公司。经理已经在那儿，微笑着向我打招呼。我原本计划早些开始以在午饭前完成项目，一切如预期般顺利。这一天开始得很平稳，让我能够按计划完成任务。
+我出门前查看了信箱，里面是空的，正如我所预料的。随后我决定在回家的路上去一趟商店买杂货。当我回来时，信箱里有一件我网购的包裹。我没想到它会当天送达，但因为我提前做了准备，所以顺利拿到了。我的决定让这次意外的收获变得可控且及时。`;
+
+        // 解析CSV数据
+        function parseCSV(csv) {
+            const lines = csv.split('\n');
+            const headers = lines[0].split(',');
+            const result = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                
+                const obj = {};
+                const currentline = lines[i].split(',');
+                
+                for (let j = 0; j < headers.length; j++) {
+                    obj[headers[j].trim()] = currentline[j] ? currentline[j].trim() : '';
+                }
+                
+                result.push(obj);
+            }
+            
+            return result;
+        }
+
+        // 处理文本数据
+        function prepareTexts() {
+            const allTexts = parseCSV(csvData);
+            
+            if (allTexts.length < NUM_TEXTS) {
+                console.warn(`警告：CSV中只有${allTexts.length}条文本，但需要${NUM_TEXTS}条`);
+                const repeatedTexts = [];
+                for (let i = 0; i < NUM_TEXTS; i++) {
+                    repeatedTexts.push(allTexts[i % allTexts.length]);
+                }
+                return repeatedTexts;
+            }
+            
+            if (allTexts.length > NUM_TEXTS) {
+                const shuffled = [...allTexts].sort(() => Math.random() - 0.5);
+                return shuffled.slice(0, NUM_TEXTS);
+            }
+            
+            return [...allTexts].sort(() => Math.random() - 0.5);
+        }
+
+        // 指导语试次
+        const instruction_trial = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: `
+                <div class="instruction-container">
+                    <h2>感谢您参加本研究</h2>
+                    <div class="instructions">
+                        <p>在本研究中，您将阅读一系列<strong>简短的文字情境描述</strong>。</p>
+                        <p>这些情境描述的是一些<strong>可能发生在日常生活中的事件或经历</strong>。</p>
+                        <p>每个情境都是<strong>独立的</strong>，彼此之间没有联系。</p>
+                        <p>请您在阅读每个情境时：</p>
+                        <ul>
+                            <li>尽量<strong>想象自己正亲身经历该情境</strong></li>
+                            <li>在阅读每个情境后，您将被要求对自己的<strong>情绪感受</strong>进行评分</li>
+                            <li>根据<strong>您的第一直觉和真实感受</strong>作答</li>
+                            <li>本研究<strong>没有正确或错误的答案</strong></li>
+                        </ul>
+                    </div>
+                    <p style="font-size: 16px; margin-top: 25px;">
+                        如果您已理解以上说明，请按任意键或点击"开始"进入正式实验。
+                    </p>
+                    <button class="jspsych-btn" onclick="jsPsych.finishTrial()">开始</button>
+                </div>
+            `,
+            choices: "ALL_KEYS",
+        };
+
+        // 创建自定义的情绪评分试次
+        function createRatingTrial(text, trialIndex) {
+            return {
+                type: jsPsychHtmlKeyboardResponse,
+                stimulus: function() {
+                    // 创建HTML内容
+                    let html = `
+                        <div class="content-container">
+                            <h3>请仔细阅读以下情境描述，并想象自己正处于这种情境之中</h3>
+                            <div class="scenario-text">${text}</div>
+                            
+                            <form id="rating-form-${trialIndex}">
+                                <!-- 效价评分 -->
+                                <div class="rating-section">
+                                    <div class="rating-title">
+                                        <span class="required-star">*</span> 总体而言，这个情境让你感觉是：
+                                    </div>
+                                    <div class="radio-group-container">
+                                        <div class="scale-labels">
+                                            <div class="scale-label scale-label-left">非常不愉快</div>
+                                            <div class="scale-label scale-label-center">中性</div>
+                                            <div class="scale-label scale-label-right">非常愉快</div>
+                                        </div>
+                                        <div class="radio-group">
+                                            ${Array.from({length: 7}, (_, i) => {
+                                                return `
+                                                    <div class="radio-option">
+                                                        <input type="radio" name="valence" value="${i+1}" required>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 唤醒度评分 -->
+                                <div class="rating-section">
+                                    <div class="rating-title">
+                                        <span class="required-star">*</span> 这个情境在情绪上让你感觉有多激动或平静？
+                                    </div>
+                                    <div class="radio-group-container">
+                                        <div class="scale-labels">
+                                            <div class="scale-label scale-label-left">非常平静</div>
+                                            <div class="scale-label scale-label-center">中等</div>
+                                            <div class="scale-label scale-label-right">非常激动</div>
+                                        </div>
+                                        <div class="radio-group">
+                                            ${Array.from({length: 7}, (_, i) => {
+                                                return `
+                                                    <div class="radio-option">
+                                                        <input type="radio" name="arousal" value="${i+1}" required>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 具体情绪评分 -->
+                                <div class="rating-section">
+                                    <div class="rating-title">
+                                        <span class="required-star">*</span> 在多大程度上，你在刚才的情境中感受到以下情绪？
+                                    </div>
+                                    ${['快乐', '悲伤', '愤怒', '恐惧', '厌恶', '惊讶'].map((emotion, idx) => `
+                                        <div class="emotion-row">
+                                            <div class="emotion-label">${emotion}</div>
+                                            <div class="radio-group-container">
+                                                <div class="scale-labels">
+                                                    <div class="scale-label scale-label-left">完全没有</div>
+                                                    <div class="scale-label scale-label-center">中等程度</div>
+                                                    <div class="scale-label scale-label-right">非常强烈</div>
+                                                </div>
+                                                <div class="radio-group">
+                                                    ${Array.from({length: 7}, (_, i) => {
+                                                        return `
+                                                            <div class="radio-option">
+                                                                <input type="radio" name="emotion_${idx}" value="${i+1}" required>
+                                                            </div>
+                                                        `;
+                                                    }).join('')}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                
+                                <div class="error-message" id="error-${trialIndex}">
+                                    请完成所有必填项目后再继续。
+                                </div>
+                                
+                                <button type="button" class="jspsych-btn" onclick="submitRating(${trialIndex})">下一页</button>
+                            </form>
+                        </div>
+                    `;
+                    return html;
+                },
+                choices: "NO_KEYS",
+                trial_duration: null, // 无限时间，等待用户提交
+                on_load: function() {
+                    // 重置表单验证
+                    const form = document.getElementById(`rating-form-${trialIndex}`);
+                    if (form) {
+                        form.reset();
+                    }
+                },
+                data: {
+                    text: text,
+                    trial_index: trialIndex
+                }
+            };
+        }
+
+        // 全局提交函数
+        window.submitRating = function(trialIndex) {
+            const form = document.getElementById(`rating-form-${trialIndex}`);
+            const errorDiv = document.getElementById(`error-${trialIndex}`);
+            
+            // 检查所有必填项是否已填写
+            const requiredRadios = form.querySelectorAll('input[type="radio"][required]');
+            let allFilled = true;
+            
+            // 检查每个组是否至少选择了一个选项
+            const radioGroups = {};
+            requiredRadios.forEach(radio => {
+                const groupName = radio.name;
+                if (!radioGroups[groupName]) {
+                    radioGroups[groupName] = form.querySelectorAll(`input[name="${groupName}"]:checked`).length > 0;
+                }
+            });
+            
+            allFilled = Object.values(radioGroups).every(filled => filled);
+            
+            if (!allFilled) {
+                errorDiv.style.display = 'block';
+                return;
+            }
+            
+            errorDiv.style.display = 'none';
+            
+            // 收集数据
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // 将具体情绪评分整理成一个数组
+            const emotions = ['快乐', '悲伤', '愤怒', '恐惧', '厌恶', '惊讶'];
+            data.emotions = emotions.map((emotion, idx) => ({
+                emotion: emotion,
+                rating: data[`emotion_${idx}`]
+            }));
+            
+            // 移除单独的emotion_x键
+            emotions.forEach((_, idx) => {
+                delete data[`emotion_${idx}`];
+            });
+            
+            // 保存数据到jsPsych
+            jsPsych.data.addProperties(data);
+            
+            // 结束当前试次
+            jsPsych.finishTrial();
+        };
+
+        // 创建实验流程
+        const texts = prepareTexts();
+        const trials = [instruction_trial];
+        
+        // 为每条文本创建评分试次
+        texts.forEach((textObj, index) => {
+            const text = textObj.chinese || textObj.text || textObj.content || "文本内容未定义";
+            trials.push(createRatingTrial(text, index));
+        });
+
+        // 结束语
+        const end_trial = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: `
+                <div class="content-container">
+                    <h2>实验完成</h2>
+                    <p>感谢您的参与！</p>
+                    <p>您已完成所有情境的评分。</p>
+                </div>
+            `,
+            choices: "NO_KEYS",
+            trial_duration: 3000
+        };
+        
+        trials.push(end_trial);
+
+        // 运行实验
+        jsPsych.run(trials);
+    </script>
+</body>
+</html>
