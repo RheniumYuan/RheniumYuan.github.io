@@ -2,19 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rhenium | Psychology</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto+Slab:wght@300;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Rhenium Yuan</title>
+    <!-- Google Fonts + simple reset -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4A4E69;
-            --secondary-color: #9A8C98;
-            --accent-color: #C9ADA7;
-            --text-color: #22223B;
-            --background-gradient: linear-gradient(135deg, #F2E9E4 0%, #EDEDE9 100%);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -22,776 +14,429 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-color);
-            background: var(--background-gradient);
-            line-height: 1.7;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #fafafa;
+            color: #1e1e2a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 5%;
+            padding: 2rem 1.5rem;
         }
 
-        /* Header */
+        /* header & navigation */
         header {
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="%234A4E69" opacity="0.1"/></svg>'),
-                        linear-gradient(160deg, var(--primary-color) 30%, #3A3D5A 100%);
-            padding: 6rem 0 4rem;
-            clip-path: ellipse(100% 100% at 50% 0%);
-            text-align: center;
-        }
-
-        .profile img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 4px solid rgba(255,255,255,0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .profile img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Navigation */
-        nav {
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #eaeef2;
+            background-color: #ffffff;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 10;
+            backdrop-filter: blur(2px);
+            background-color: rgba(255, 255, 255, 0.92);
         }
 
-        nav ul {
-            display: flex;
-            justify-content: center;
-            gap: 2.5rem;
-            padding: 1.2rem 0;
-            margin: 0;
-        }
-
-        nav a {
-            color: var(--primary-color);
-            font-weight: 500;
-            text-decoration: none;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Card System */
-        .card {
-            width: 85%;
-            max-width: 780px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(255,255,255,0.97);
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-            margin: 2rem 0;
-            border-left: 2px solid var(--accent-color);
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: rgba(250,250,250,0.9);
-            border-radius: 8px;
-        }
-
-        .timeline-item::before {
-            content: '▹';
-            position: absolute;
-            left: -1.8rem;
-            top: 1.4rem;
-            color: var(--accent-color);
-            font-size: 1.4rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .skill-item {
-            text-align: center;
-            padding: 1.2rem;
-            background: rgba(245,245,245,0.9);
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-
-        .skill-item:hover {
-            transform: translateY(-3px);
-        }
-
-        .skill-icon {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-        }
-
-        /* 项目展示 */
-        .project-card {
-            display: flex;
-            gap: 2rem;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            background: rgba(255,255,255,0.97);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        .project-image {
-            width: 200px;
-            height: 150px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .project-tags {
+        .nav-bar {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .project-tag {
-            background: var(--accent-color);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* 学术博客 */
-        .blog-post {
-            margin: 2rem 0;
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.97);
-            border-left: 4px solid var(--accent-color);
-            border-radius: 8px;
-        }
-
-        .post-meta {
-            color: var(--secondary-color);
-            margin: 0.5rem 0;
-            font-size: 0.9rem;
-        }
-
-        .read-more {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1.2rem;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: opacity 0.3s;
-        }
-
-        .read-more:hover {
-            opacity: 0.9;
-        }
-
-        /* 荣誉奖励时间线样式 */
-        .awards-timeline {
-            position: relative;
-            padding-left: 2.5rem;
-            margin-top: 2rem;
-        }
-
-        .award-item {
-            position: relative;
-            margin-bottom: 2.5rem;
-            padding-left: 2rem;
-        }
-
-        .award-item::before {
-            content: '';
-            position: absolute;
-            left: -2px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px var(--accent-color);
-            z-index: 2;
-        }
-
-        .award-year {
-            position: absolute;
-            left: -3.5rem;  /* 原值-3.5rem → 向左多移动0.7rem */
-            padding: 0.3rem 1rem;  /* 增加左右内边距 */
-            top: 0;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-
-        .award-content {
-            background: rgba(245,245,245,0.9);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
-        }
-
-        .award-content:hover {
-            transform: translateX(5px);
-        }
-
-        .award-org {
-            color: var(--secondary-color);
-            font-style: italic;
-            margin: 0.3rem 0;
-        }
-
-        .award-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .award-year {
-                position: relative;
-                left: 0;
-                display: inline-block;
-                margin-left: -0.5rem;
-                margin-bottom: 0.5rem;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .card {
-                width: 92%;
-                padding: 1.5rem;
-                margin: 1.5rem auto;
-            }
-
-            nav ul {
-                flex-wrap: wrap;
-                gap: 1.2rem;
-                padding: 1rem;
-            }
-
-            .profile img {
-                width: 160px;
-                height: 160px;
-            }
-
-            .project-card {
-                flex-direction: column;
-            }
-            
-            .project-image {
-                width: 100%;
-                height: 200px;
-            }
-            
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .card {
-                width: 75%;
-            }
-        }
-
-        /* Contact Grid */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .contact-item {
-            padding: 1.2rem;
-            background: rgba(245,245,245,0.9);
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-        }
-
-        /* 学术服务样式 */
-        .service-section {
-            margin-bottom: 2.5rem;
-        }
-
-        .service-section h3 {
-            color: var(--primary-color);
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .review-item {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            margin-bottom: 0.8rem;
-            background: rgba(245,245,245,0.9);
-            border-radius: 6px;
-            transition: transform 0.3s;
+            align-items: baseline;
+            gap: 0.75rem;
         }
 
-        .review-item:hover {
-            transform: translateX(5px);
+        .logo {
+            font-weight: 700;
+            font-size: 1.35rem;
+            letter-spacing: -0.3px;
+            color: #1e466e;
         }
 
-        .review-journal {
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.6rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #2c3e4e;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #0f5b9c;
+            border-bottom: 2px solid #0f5b9c;
+            padding-bottom: 2px;
+        }
+
+        /* headings */
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            color: #111;
+        }
+
+        h2 {
+            font-size: 1.8rem;
             font-weight: 600;
+            margin: 1.5rem 0 1rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1e2f3e;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem 0;
+            color: #2c3e50;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        /* profile intro */
+        .profile {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .profile-text {
             flex: 2;
         }
 
-        .review-years {
-            color: var(--secondary-color);
-            flex: 1;
+        .profile-avatar {
+            flex: 0 0 120px;
             text-align: center;
         }
 
-        .review-count {
-            flex: 1;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-
-        .committee-item {
-            padding: 1rem;
-            background: rgba(245,245,245,0.9);
-            border-radius: 6px;
-            margin-bottom: 0.8rem;
-        }
-
-        .committee-role {
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .committee-conf {
-            margin-left: 1rem;
-            color: var(--secondary-color);
-        }
-
-        /* 教学经历样式 */
-        .teaching-timeline {
-            position: relative;
-            padding-left: 3rem;
-            margin-top: 1.5rem;
-        }
-
-        .teaching-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding-left: 2rem;
-        }
-
-        .teaching-item::before {
-            content: '';
-            position: absolute;
-            left: -12px;
-            top: 8px;
-            width: 16px;
-            height: 16px;
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            background: #d9e2ef;
             border-radius: 50%;
-            background: var(--accent-color);
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            font-weight: 500;
+            color: #2c5282;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border: 1px solid #cddfe7;
         }
 
-        .teaching-period {
-            position: absolute;
-            left: -4rem;
-            top: 0;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-weight: 600;
+        .affiliation {
+            font-size: 1.1rem;
+            color: #3a546d;
+            margin: 0.4rem 0 0.75rem 0;
+        }
+
+        .bio-text {
+            margin-top: 0.75rem;
+            color: #2d3e4f;
+        }
+
+        /* lists: publications, teaching, etc */
+        .pub-list, .award-list, .review-list, .ta-list, .blog-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pub-list li, .review-list li, .ta-list li, .award-list li {
+            margin-bottom: 1rem;
+            padding-left: 0.25rem;
+            border-left: 2px solid transparent;
+            transition: border 0.1s;
+        }
+
+        .pub-list li strong, .ta-list li strong {
+            font-weight: 650;
+            color: #1e466e;
+        }
+
+        .pub-venue {
+            font-style: italic;
+            color: #4a627a;
             font-size: 0.9rem;
         }
 
-        .teaching-content {
-            background: rgba(245,245,245,0.9);
-            padding: 1.5rem;
-            border-radius: 8px;
+        .pub-links {
+            margin-top: 0.2rem;
+            font-size: 0.85rem;
         }
 
-        .teaching-role {
-            color: var(--secondary-color);
-            font-style: italic;
-            margin: 0.3rem 0;
+        .pub-links a {
+            color: #0f5b9c;
+            text-decoration: none;
+            border-bottom: 1px dotted #b9cedf;
         }
 
-        .teaching-desc {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0.8rem 0;
+        .pub-links a:hover {
+            border-bottom: 1px solid;
         }
 
-        .teaching-skills {
+        .award-list li, .review-list li {
             display: flex;
             flex-wrap: wrap;
+            align-items: baseline;
             gap: 0.5rem;
-            margin-top: 1rem;
         }
 
-        .skill-tag {
-            background: var(--accent-color);
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
+        .award-year {
+            font-weight: 600;
+            min-width: 65px;
+            color: #2b6a9f;
         }
 
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .review-item {
+        .review-item {
+            font-weight: 500;
+        }
+
+        /* blog cards */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 14px;
+            padding: 1.25rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid #eef2f6;
+            transition: transform 0.1s ease, box-shadow 0.2s;
+        }
+
+        .blog-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f486b;
+        }
+
+        .blog-meta {
+            font-size: 0.75rem;
+            color: #6c86a0;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .blog-excerpt {
+            font-size: 0.9rem;
+            color: #2c3e4e;
+            margin-bottom: 1rem;
+            line-height: 1.45;
+        }
+
+        .blog-readmore {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #0f5b9c;
+            text-decoration: none;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: 0;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6a7c8f;
+            border-top: 1px solid #e2e8f0;
+            padding: 2rem 0.5rem 1rem;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1.5rem 1.2rem;
+            }
+            .nav-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .profile {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 0.5rem;
             }
-            
-            .review-years, .review-count {
-                text-align: left;
+            h1 {
+                font-size: 2rem;
             }
-            
-            .teaching-period {
-                position: relative;
-                left: 0;
-                display: inline-block;
-                margin-bottom: 0.8rem;
-            }
-            
-            .committee-item {
-                flex-direction: column;
-            }
-            
-            .committee-conf {
-                margin-left: 0;
-                margin-top: 0.5rem;
+            h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container profile">
-            <img src="photo.png" alt="[YuanMinghao]">
-            <h1 style="color: white; margin: 1.2rem 0 0.5rem;">YUAN Minghao</h1>
-            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">
-                Psychology<br>
-                Peking University
-            </p>
+
+<header>
+    <div class="nav-bar">
+        <div class="logo">Minghao Yuan</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#review">Services</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#awards">Awards</a></li>
+            <li><a href="#blog">Blog</a></li>
+        </ul>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Profile + short bio (个人简介) -->
+    <section id="about">
+        <div class="profile">
+            <div class="profile-text">
+                <h1>Minghao Yuan</h1>
+                <div class="affiliation">Ph.D. student · DACN Lab <br> Peking University, Beijing</div>
+                <div class="bio-text">
+                    My name is Yuan Minghao (袁明昊). 
+                    I am a undergraduate student of Yuanpei College, Peking University. 
+                    I am interested in computational psychiatry, emotion, and mental health. 
+                    Now I am a research assistant in Depression and Anxiety Computational Neuroscience Lab (<a href="https://ypeng.org">DACN Lab</a>) mentored by Dr. Yujia Peng.
+                </div>
+            </div>
+            <div class="profile-avatar">
+                <img src="photo.png" alt="Minghao Yuan" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #cddfe7;">
+            </div>
         </div>
-    </header>
+    </section>
 
-    <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
-                <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
-                <!--<li><a href="#research"><i class="fas fa-microscope"></i> Research</a></li>-->
-                <li><a href="#publications"><i class="fas fa-file-alt"></i> Publications</a></li>
-                <!--<li><a href="#skills"><i class="fas fa-tools"></i> Skills</a></li>-->
-                <li><a href="#blog"><i class="fas fa-pencil-alt"></i> Research Notes</a></li>
-                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-            </ul>
+    <!-- 教育经历 Education -->
+    <section id="education" class="section">
+        <h2>Education</h2>
+        <ul style="list-style: none; padding-left: 0;">
+            <li style="margin-bottom: 1rem;"><strong>Ph.D. in Applied Psychology</strong> — School of Psychology and Cognitive Sciences, Peking University (2026 - 2031)<br>
+            <li style="margin-bottom: 0.5rem;"><strong>B.Sc. in Psychology</strong> — Yuanpei College, Peking University (2022 - 2026)<br>
+            <!--<span style="color:#4a627a;">First-class honor, rank 2/180</span></li>-->
+        </ul>
+    </section>
+
+    <!-- 发表经历 Publications (representative) -->
+    <section id="publications" class="section">
+        <h2>Publications</h2>
+        <ul class="pub-list">
+            <li>
+                <strong>Tracking Life's Ups and Downs: Mining Life Events from Social Media Posts for Mental Health Analysis</strong><br>
+                <span class="pub-venue">Minghao Lv, Siyuan Chen, Haoan Jin, Minghao Yuan, Qianqian Ju, Yujia Peng, Kenny Q. Zhu, and Mengyue Wu · ACL 2025 · </span>
+                <span class="pub-links"><a href="https://doi.org/10.18653/v1/2025.acl-long.345">[DOI]</a></span>
+            </li>
+
+        </ul>
+        <div style="margin-top: 0.5rem; font-size: 0.85rem;">† Equal contribution · * corresponding author. Full list on <a href="https://scholar.google.com/citations?user=lGLxEHgAAAAJ" style="color:#0f5b9c;">Google Scholar</a>.</div>
+    </section>
+
+    <!-- 审稿经历 Reviewing / Service -->
+    <section id="review" class="section">
+        <h2>Services</h2>
+        <ul class="review-list">
+            <li><span class="review-item">Conference Reviewer:</span> WWW (2024)</li>
+            <li><span class="review-item">Journal Reviewer:</span> BMC psychology</li>
+        </ul>
+    </section>
+
+    <!-- TA经历 Teaching Assistant -->
+    <section id="teaching" class="section">
+        <h2>Teaching Experience</h2>
+        <ul class="ta-list">
+            <li><strong>Advanced Research Methods in Psychology</strong> (master's) — Peking University (Spring 2026)<br>
+                <span class="pub-venue">Teaching assistant</span>
+            </li>
+            <li><strong>Experimental Psychology</strong> (undergraduate) — Peking University (Fall 2025)<br>
+                <span class="pub-venue">Teaching assistant</span>
+            </li>
+        </ul>
+    </section>
+
+    <!-- 获得奖励 Awards & Honors -->
+    <section id="awards" class="section">
+        <h2>Awards & Honors</h2>
+        <ul class="award-list">
+            <li><span class="award-year">2025</span> — The Second Prize of Peking University Scholarship, PKU</li>
+            <li><span class="award-year">2024</span> — CMC Scholarship, PKU</li>
+            <li><span class="award-year">2023</span> — The First Prize of Peking University Scholarship, PKU</li>
+            <li><span class="award-year">2022</span> — The 93rd-94th Soh Bing Scholarship, Soh Bing Scholarship Foundationt</li>
+        </ul>
+    </section>
+
+    <!-- Blog section: 自己写的一些东西 (short thoughts / technical essays) -->
+    <section id="blog" class="section">
+        <h2>Blog · Notes</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-title">Meta-Analysis Tutorial in R</div>
+                <div class="blog-excerpt">A Chinese Meta-analysis tutorial in R language, based on <a href="https://doing-meta.guide/preface.html">Doing Meta-Analysis with R: A Hands-On Guide</a>.
+                </div>
+                <a href="https://rheniumyuan.github.io/MetaAnalysis.html" class="blog-readmore">Read more →</a>
+            </div>
+            <div class="blog-card">
+                <div class="blog-title">RStan: the R interface to Stan</div>
+                <div class="blog-excerpt">Chinese translation of <a href="https://mc-stan.org/rstan/articles/rstan.html">RStan: the R interface to Stan</a>, a vignette providing an introduction to fitting a model in RStan.</div>
+                <a href="https://rheniumyuan.github.io/homepage/blog/rstan-vignette-cn.html" class="blog-readmore">Read more →</a>
+            </div>
         </div>
-    </nav>
+    </section>
 
-    <main class="container">
-        <!-- About Section -->
-        <section id="about" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-user"></i> About Me
-            </h2>
-            <p>My name is Yuan Minghao (袁明昊). I am a undergraduate student of Yuanpei College, Peking University. 
-                I am interested in computational psychology and mental health. 
-                Now I am a research assistant in <a href="https://www.ypeng.org/">Depression and Anxiety Computational Neuroscience Lab (DACN Lab)</a> mentored by Dr. Yujia Peng.</p>
-        </section>
-        
-        <!-- Education Section -->
-        <section id="education" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-university"></i> Education
-            </h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>BS in Psychology</h3>
-                    <p>Peking University • 2022-Present</p>
-                    <!--<p>Advisor: [导师姓名]</p>-->
-                </div>
-            </div>
-        </section>
-
-        <!-- Research Section -->
-        <section id="research" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-brain"></i> Research Focus
-            </h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Cognitive Modeling</h3>
-                    <p>Developing computational models for social cognitive process, such as Bayesian models for decision making.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Network Analysis</h3>
-                    <p>Using graph theory and network analysis to solve problems in mental health.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Publications Section -->
-        <section id="publications" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-book-open"></i> Publications
-            </h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>2025</h3>
-                    <p>Lv, M., Chen, S., Jin, H., <b>Yuan, M.</b>, Ju, Q., Peng, Y., Zhu, K. Q., & Wu, M. (2025). Tracking Life's Ups and Downs: Mining Life Events from Social Media Posts for Mental Health Analysis. In W. Che, J. Nabende, E. Shutova, & M. T. Pilehvar (Ed.), Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) (pp. 6950-6965)(ACL 2025). Association for Computational Linguistics. <a href="https://aclanthology.org/2025.acl-long.345/">https://aclanthology.org/2025.acl-long.345/</a></p>
-                    <!--<a href="#" class="button">PDF</a>-->
-                </div>
-                <!-- 添加更多出版物 -->
-            </div>
-        </section>
-
-        <section id="awards" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-award"></i> Honors & Awards
-            </h2>
-            
-            <div class="awards-timeline">
-                <div class="award-item">
-                    <div class="award-year">2024</div>
-                    <div class="award-content">
-                        <h3>CMC Scholarship</h3>
-                        <p class="award-org">Peking University</p>
-                        <!--<p class="award-desc">Recognized for innovative modeling approach in decision-making research</p>-->
-                    </div>
-                </div>
-                <div class="award-item">
-                    <div class="award-year">2023</div>
-                    <div class="award-content">
-                        <h3>The First Prize of Peking University Scholarship</h3>
-                        <p class="award-org">Peking University</p>
-                        <!--<p class="award-desc">Recognized for innovative modeling approach in decision-making research</p>-->
-                    </div>
-                </div>
-                
-                <div class="award-item">
-                    <div class="award-year">2022</div>
-                    <div class="award-content">
-                        <h3>The 93rd-94th Soh Bing Scholarship</h3>
-                        <p class="award-org">Soh Bing Scholarship Foundation</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="academic-service" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-handshake"></i> Academic Service
-            </h2>
-            
-            <div class="service-section">
-                <h3><i class="fas fa-pen-fancy"></i> Journal Reviewing</h3>
-                <div class="review-list">
-                    <div class="review-item">
-                        <div class="review-journal">BMC Psychology</div>
-                        <div class="review-years">2025-Present</div>
-                        <div class="review-count">1 manuscripts</div>
-                    </div>
-
-                </div>
-            </div>
-            
-            <!--<div class="service-section">
-                <h3><i class="fas fa-users"></i> Conference Committees</h3>
-                <div class="committee-list">
-                    <div class="committee-item">
-                        <span class="committee-role">Program Committee Member</span>
-                        <span class="committee-conf">International Conference on Cognitive Modeling 2023</span>
-                    </div>
-                </div>
-            </div>-->
-        </section>
-
-        <section id="teaching" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-chalkboard-teacher"></i> Teaching Experience
-            </h2>
-            
-            <div class="teaching-timeline">
-                <div class="teaching-item">
-                    <div class="teaching-period">Fall 2025</div>
-                    <div class="teaching-content">
-                        <h3>Experimental Psychology</h3>
-                        <p class="teaching-role">Teaching Assistant</p>
-                        <!--<p class="teaching-desc">Led weekly experiment sessions, graded assignments, and held office hours for 45 students</p>
-                        <div class="teaching-skills">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">Cognitive Modeling</span>
-                            <span class="skill-tag">Statistics</span>-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 新增技能模块 -->
-        <section id="skills" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-tools"></i> Technical Skills
-            </h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <i class="fab fa-python skill-icon"></i>
-                    <h3>Python</h3>
-                    <p>PyTorch, NumPy, SciKit-Learn</p>
-                </div>
-                <!--<div class="skill-item">
-                    <i class="fas fa-brain skill-icon"></i>
-                    <h3>Neuroimaging</h3>
-                    <p>fMRI, EEG Analysis</p>
-                </div>-->
-                <div class="skill-item">
-                    <i class="fas fa-chart-line skill-icon"></i>
-                    <h3>Statistics</h3>
-                    <p>R, SPSS</p>
-                </div>
-                <!-- 添加更多技能 -->
-            </div>
-        </section>
-
-        <!-- 新增项目模块
-        <section id="projects" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-flask"></i> Research Projects
-            </h2>
-            <div class="project-card">
-                <img src="project1.jpg" alt="Cognitive Modeling" class="project-image">
-                <div>
-                    <h3>Decision-Making Model</h3>
-                    <div class="project-tags">
-                        <span class="project-tag">Bayesian Modeling</span>
-                        <span class="project-tag">Python</span>
-                        <span class="project-tag">Behavioral Data</span>
-                    </div>
-                    <p>Developed a computational model to simulate human decision-making processes under uncertainty...</p>
-                    <a href="#" class="read-more">View Details</a>
-                </div>
-            </div>
-            
-        </section>-->
-
-        <!-- 新增博客模块 -->
-        <section id="blog" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-book-open"></i> Research Notes
-            </h2>
-            <div class="blog-post">
-                <h3>Meta-Analysis Tutorial in R</h3>
-                <div class="post-meta">
-                    <span><i class="far fa-calendar"></i> November 7, 2023</span>
-                    <span style="margin-left: 1rem;"><i class="far fa-clock"></i> 5 min read</span>
-                </div>
-                <p>A Chinese Meta-analysis tutorial in R language, based on <a href="https://bookdown.org/MathiasHarrer/Doing_Meta_Analysis_in_R/">Doing Meta-Analysis with R: A Hands-On Guide</a>.</p>
-                <a href="https://rheniumyuan.github.io/MetaAnalysis.html" class="read-more">Continue Reading →</a>
-            </div>
-            <div class="blog-post">
-                <h3>RStan: the R interface to Stan</h3>
-                <div class="post-meta">
-                    <span><i class="far fa-calendar"></i> November 7, 2023</span>
-                    <span style="margin-left: 1rem;"><i class="far fa-clock"></i> 5 min read</span>
-                </div>
-                <p>Chinese translation of <a href="https://mc-stan.org/rstan/articles/rstan.html">RStan: the R interface to Stan</a>, a vignette providing an introduction to fitting a model in RStan.</p>
-                <a href="https://rheniumyuan.github.io/homepage/blog/rstan-vignette-cn.html" class="read-more">Continue Reading →</a>
-            </div>
-            <!-- 添加更多博客文章 -->
-        </section>
-
-
-        <!-- Contact Section -->
-        <section id="contact" class="card">
-            <h2 style="color: var(--primary-color);">
-                <i class="fas fa-address-card"></i> Contact
-            </h2>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <i class="fas fa-envelope fa-2x"></i>
-                    <h3>Email</h3>
-                    <p>rheniumyuan@foxmail.com</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-github fa-2x"></i>
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/RheniumYuan">RheniumYuan</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-google fa-2x"></i>
-                    <h3>Google Scholar</h3>
-                    <a href="https://scholar.google.com/citations?hl=zh-CN&user=lGLxEHgAAAAJ">Minghao Yuan</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
+    <!-- subtle contact / footer (optional) -->
     <footer>
-        <p>&copy; 2025 Yuan Minghao. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
-            Powered by Academic HTML Template
-        </p>
+        <p>📍 Beijing, China · 📧 rheniumyuan@foxmail.com · <a href="https://scholar.google.com/citations?user=lGLxEHgAAAAJ" style="color:#3a6b92; text-decoration: none;">Google Scholar</a> · <a href="https://github.com/rheniumyuan" style="color:#3a6b92; text-decoration: none;">GitHub</a> </p>
+        <p style="margin-top: 0.8rem;">© 2026 Minghao Yuan — All rights reserved. Last updated April 2026.</p>
     </footer>
+</main>
+
+<!-- optional smooth scroll behavior for anchor links -->
+<script>
+    document.querySelectorAll('.nav-links a, .logo a').forEach(anchor => {
+        if(anchor.getAttribute('href') && anchor.getAttribute('href').startsWith('#')) {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+    });
+    // add small smooth scroll to logo if needed (logo not a link currently)
+    const logoLink = document.querySelector('.logo');
+    if(logoLink && !logoLink.querySelector('a')) {
+        logoLink.style.cursor = 'pointer';
+        logoLink.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+</script>
 </body>
 </html>
