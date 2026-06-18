@@ -209,7 +209,7 @@
         /* blog cards */
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-top: 0.5rem;
         }
@@ -304,6 +304,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#publications">Publications</a></li>
+            <li><a href="#projects">Projects</a></li>
             <li><a href="#review">Services</a></li>
             <li><a href="#teaching">Teaching</a></li>
             <li><a href="#awards">Awards</a></li>
@@ -321,10 +322,16 @@
                 <h1>Yuan Minghao</h1>
                 <div class="affiliation">Ph.D. student · DACN Lab <br> Peking University, Beijing</div>
                 <div class="bio-text">
-                    My name is Yuan Minghao (袁明昊). 
-                    I am a undergraduate student of Yuanpei College, Peking University. 
-                    I am interested in computational psychiatry, emotion, and mental health. 
-                    Now I am a research assistant in Depression and Anxiety Computational Neuroscience Lab (<a href="https://ypeng.org">DACN Lab</a>) mentored by Dr. Yujia Peng.
+                    <p>
+                        My name is Yuan Minghao (袁明昊). I am a Ph.D. student in the Depression and Anxiety Computational Neuroscience Lab (<a href="https://ypeng.org">DACN Lab</a>), 
+                        mentored by Dr. Yujia Peng at Peking University. My research focuses on computational psychiatry and mental health, with particular interests 
+                        in computational modeling, network analysis, and quantitative approaches to understanding human behavior and mental health. I am also interested 
+                        in research methods on complex psychological systems, including causal inference, computational modeling, digital phenotyping, and behavioral 
+                        data science (behavioromics).
+                    </p>
+                    <p>
+                        I welcome collaboration opportunities on research related to mental health, computational psychiatry, quantitative methods, and related interdisciplinary topics.
+                    </p>
                 </div>
             </div>
             <div class="profile-avatar">
@@ -347,13 +354,12 @@
     <section id="publications" class="section">
         <h2>Publications</h2>
         <ul class="pub-list">
-            <!--
-            <li>
+            <!--<li>
                 <strong>Altered Interpersonal Space in Social Anxiety: A Computational Study in Virtual Reality</strong><br>
                 <span class="pub-venue"><b>Minghao Yuan</b>, Jiayin Xiao, Yujia Peng · under review · </span>
                 <span class="pub-links"><a href="https://doi.org/10.18653/v1/2025.acl-long.345">[DOI]</a></span>
-            </li>-->
-            <!--<li>
+            </li>
+            <li>
                 <strong>Revisiting Centrality in Psychological Networks: Evidence on Its Relation to Causal Importance in Acyclic and Cyclic Models</strong><br>
                 <span class="pub-venue"><b>Minghao Yuan</b> · under review · </span>
                 <span class="pub-links"><a href="https://doi.org/10.18653/v1/2025.acl-long.345">[DOI]</a></span>
@@ -366,6 +372,20 @@
 
         </ul>
         <div style="margin-top: 0.5rem; font-size: 0.85rem;">† Equal contribution · * corresponding author. Full list on <a href="https://scholar.google.com/citations?user=lGLxEHgAAAAJ" style="color:#0f5b9c;">Google Scholar</a>.</div>
+    </section>
+
+    <!-- Projects / software -->
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-title">psychHypergraph</div>
+                <div class="blog-excerpt">
+                    <strong>psychHypergraph</strong> implements information-theoretic hypergraph analysis for psychometric data, based on Marinazzo et al. (2024) and Possenti et al. (2026). The package provides tools for constructing psychometric hypergraphs, identifying synergistic and redundant higher-order interactions, centrality analysis, clustering, and visualization.
+                </div>
+                <a href="https://github.com/RheniumYuan/psychHypergraph" class="blog-readmore">View on GitHub →</a>
+            </div>
+        </div>
     </section>
 
     <!-- 审稿经历 Reviewing / Service -->
